@@ -4,12 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel {
-    int rows = 5;
-    int columns = 5;
     int tileSize = 35;
 
-    public GamePanel() {
-        setPreferredSize(new Dimension(rows * tileSize, columns * tileSize));
+    public GamePanel(int rows, int columns) {
+        setPreferredSize(new Dimension(rows * this.tileSize, columns * this.tileSize));
         setLayout(new GridLayout(rows, columns));
         setBackground(Color.DARK_GRAY);
 

@@ -1,5 +1,7 @@
 package View;
 
+import Model.BoardModel;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -17,8 +19,10 @@ public class Board {
         Menu menu = new Menu();
         Scoreboard scoreboard = new Scoreboard();
 
+        BoardModel boardmodel = new BoardModel(5,5);
+
         JPanel gamePanelWrapper = new JPanel(new GridBagLayout());
-        GamePanel gamepanel = new GamePanel();
+        GamePanel gamepanel = new GamePanel(boardmodel.getGridRows(),boardmodel.getGridColumns());
         gamePanelWrapper.add(gamepanel);
 
         frame.add(title, BorderLayout.NORTH);
