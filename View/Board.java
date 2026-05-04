@@ -15,6 +15,7 @@ public class Board {
         JLabel title = new JLabel("SameGame");
 
         Menu menu = new Menu();
+        Scoreboard scoreboard = new Scoreboard();
 
         JPanel gamePanelWrapper = new JPanel(new FlowLayout());
         GamePanel gamepanel = new GamePanel();
@@ -23,7 +24,7 @@ public class Board {
         frame.add(title, BorderLayout.NORTH);
         frame.add(menu, BorderLayout.EAST);
         frame.add(gamePanelWrapper, BorderLayout.CENTER);
-
+        frame.add(scoreboard, BorderLayout.SOUTH);
 
         frame.setVisible(true);
     }
