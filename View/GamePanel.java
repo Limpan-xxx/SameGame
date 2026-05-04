@@ -3,16 +3,28 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
-public class GamePanel {
+public class GamePanel extends JPanel{
 
-    JPanel panel;
-    int GamePanelSizeX = 50; // ska ändras till rätt storlek
-    int GamePanelSizeY = 50;
+    int rows = 5; //
+    int columns = 5;
     int tileSize = 10;
 
     public GamePanel(){
-        panel = new JPanel();
-        panel.setPreferredSize(new Dimension(GamePanelSizeX * tileSize, GamePanelSizeY * tileSize));
-        panel.setLayout(new GridLayout(GamePanelSizeX, GamePanelSizeY));
+        setPreferredSize(new Dimension(rows * tileSize, columns * tileSize));
+        setLayout(new GridLayout(rows, columns));
+        setBackground(Color.DARK_GRAY);
+
+        for(int i = 0; i < rows*columns; i++){
+            JButton cell = new JButton();
+            cell.setBackground(randomColor());
+            add(cell);
+        }
     }
+
+    private Color randomColor(){
+        Color[] colors = {Color.RED, Color.blue, Color.green};
+        return colors[(int) (Math.random() * colors.length)];
+    }
+
+
 }
