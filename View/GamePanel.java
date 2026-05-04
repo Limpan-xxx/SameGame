@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel {
-    int rows = 5; //
+    int rows = 5;
     int columns = 5;
     int tileSize = 35;
 
@@ -20,9 +20,11 @@ public class GamePanel extends JPanel {
         }
     }
 
+    /**
+     @return random color in colors array
+     */
     private Color randomColor() {
         Color[] colors = { Color.RED, Color.blue, Color.green };
         return colors[(int) (Math.random() * colors.length)];
     }
-
 }
