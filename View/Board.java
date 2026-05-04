@@ -12,12 +12,12 @@ public class Board {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
-        JLabel title = new JLabel("SameGame");
+        JLabel title = new JLabel("SameGame", SwingConstants.CENTER);
 
         Menu menu = new Menu();
         Scoreboard scoreboard = new Scoreboard();
 
-        JPanel gamePanelWrapper = new JPanel(new FlowLayout());
+        JPanel gamePanelWrapper = new JPanel(new GridBagLayout());
         GamePanel gamepanel = new GamePanel();
         gamePanelWrapper.add(gamepanel);
 
