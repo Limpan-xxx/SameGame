@@ -16,8 +16,14 @@ public class Board {
 
         Menu menu = new Menu();
 
+        JPanel gamePanelWrapper = new JPanel(new FlowLayout());
+        GamePanel gamepanel = new GamePanel();
+        gamePanelWrapper.add(gamepanel);
+
         frame.add(title, BorderLayout.NORTH);
         frame.add(menu, BorderLayout.EAST);
+        frame.add(gamePanelWrapper, BorderLayout.CENTER);
+
 
         frame.setVisible(true);
     }

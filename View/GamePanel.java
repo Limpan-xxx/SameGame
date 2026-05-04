@@ -4,10 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel{
-
     int rows = 5; //
     int columns = 5;
-    int tileSize = 10;
+    int tileSize = 35;
 
     public GamePanel(){
         setPreferredSize(new Dimension(rows * tileSize, columns * tileSize));
