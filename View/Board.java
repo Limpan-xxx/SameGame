@@ -22,7 +22,7 @@ public class Board {
         BoardModel boardmodel = new BoardModel(5,5);
 
         JPanel gamePanelWrapper = new JPanel(new GridBagLayout());
-        GamePanel gamepanel = new GamePanel(boardmodel.getGridRows(),boardmodel.getGridColumns());
+        GamePanel gamepanel = new GamePanel(boardmodel);
         gamePanelWrapper.add(gamepanel);
 
         frame.add(title, BorderLayout.NORTH);

@@ -1,15 +1,13 @@
 package Model;
 
-import java.awt.*;
-
 public class Tile {
-    private final Color color;
+    private final int colorID;
 
-    public Tile(Color color){
-        this.color = color;
+    public Tile(int colorID){
+        this.colorID = colorID;
     }
 
-    public Color getColor() {
-        return this.color;
+    public int getColorID() {
+        return this.colorID;
     }
 }
