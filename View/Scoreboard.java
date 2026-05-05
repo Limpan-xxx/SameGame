@@ -31,4 +31,20 @@ public class Scoreboard extends JPanel {
     public void SetRemainingTilesLabel(int tiles) {
         remainingTilesLabel.setText("Remaining Tiles: " + tiles);
     }
+
+    /*
+     * När vi tar bort en grupp av tiles
+     * 
+     * numberOfRemovedTiles = hämta antal borttagna tiles
+     * 
+     * scoreboardModel.updateAfterMove(numberOfRemovedTiles)
+     * 
+     * scoreboardView.setCurrentScoreLabel(scoreboardModel.getCurrentScore())
+     * 
+     * scoreboardView.SetLastMoveScoreLabel(scoreboardModel.getLastMoveScore())
+     * 
+     * scoreboardView.SetRemainingTilesLabel(scoreboardModel.getRemainingTiles())
+     * 
+     * Slut
+     */
 }
