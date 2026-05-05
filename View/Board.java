@@ -1,6 +1,7 @@
 package View;
 
 import Model.BoardModel;
+import Presentation.GamePresenter;
 
 import java.awt.*;
 import javax.swing.*;
@@ -19,10 +20,11 @@ public class Board {
         Menu menu = new Menu();
         Scoreboard scoreboard = new Scoreboard();
 
-        BoardModel boardmodel = new BoardModel(10,5);
+        BoardModel boardModel = new BoardModel(5,5);
+        GamePresenter gamePresenter = new GamePresenter(boardModel);
 
         JPanel gamePanelWrapper = new JPanel(new GridBagLayout());
-        GamePanel gamepanel = new GamePanel(boardmodel);
+        GamePanel gamepanel = new GamePanel(boardModel, gamePresenter);
         gamePanelWrapper.add(gamepanel);
 
         frame.add(title, BorderLayout.NORTH);

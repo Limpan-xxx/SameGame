@@ -1,7 +1,7 @@
 package Model;
 
 public class Tile {
-    private final int colorID;
+    private int colorID;
 
     public Tile(int colorID){
         this.colorID = colorID;
@@ -9,5 +9,9 @@ public class Tile {
 
     public int getColorID() {
         return this.colorID;
+    }
+
+    public void setColorID(int ID){
+        colorID = ID;
     }
 }

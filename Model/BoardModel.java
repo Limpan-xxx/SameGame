@@ -21,6 +21,20 @@ public class BoardModel {
         }
     }
 
+    public void removeTile(int row, int column){
+        System.out.println();
+        this.board[row][column].setColorID(0); // sets the tile to DARK_GRAY
+
+        // för debug konsol
+        System.out.println("removed " + row + " " + column);
+        for(int i = 0; i < gridRows; i++){
+            System.out.println();
+            for(int j = 0; j < gridColumns ; j++){
+                System.out.print(board[i][j].getColorID() + " ");
+            }
+        }
+    }
+
     public Tile[][] getBoard(){
         return board;
     }

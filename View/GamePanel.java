@@ -11,22 +11,22 @@ import java.awt.event.ActionListener;
 public class GamePanel extends JPanel {
     int tileSize = 35;
     JButton[][] buttons;
-    private BoardModel boardmodel;
+    private BoardModel boardModel;
 
-    public GamePanel(BoardModel boardmodel) {
-        this.boardmodel = boardmodel;
-        int rows = boardmodel.getGridRows();
-        int columns = boardmodel.getGridColumns();
+    public GamePanel(BoardModel boardModel, GamePresenter gamePresenter) {
+        this.boardModel = boardModel;
+        int rows = boardModel.getGridRows();
+        int columns = boardModel.getGridColumns();
         this.buttons = new JButton[rows][columns];
 
         setPreferredSize(new Dimension(rows * this.tileSize, columns * this.tileSize));
         setLayout(new GridLayout(rows, columns));
         setBackground(Color.DARK_GRAY);
 
-        for (int i = 0; i < boardmodel.getGridRows(); i++) {
-            for (int j = 0; j < boardmodel.getGridColumns(); j++) {
+        for (int i = 0; i < boardModel.getGridRows(); i++) {
+            for (int j = 0; j < boardModel.getGridColumns(); j++) {
                 JButton Tile = new JButton();
-                Tile.setBackground(TileColor.IDtoColor(boardmodel.getBoard()[i][j].getColorID()));
+                Tile.setBackground(TileColor.IDtoColor(boardModel.getBoard()[i][j].getColorID()));
                 buttons[i][j] = Tile;
                 add(Tile);
                 int row = i;
@@ -34,7 +34,7 @@ public class GamePanel extends JPanel {
                 Tile.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        GamePresenter.printTest(row, column);
+                        gamePresenter.tileClicked(row, column);
                     }
                 });
             }
@@ -42,12 +42,12 @@ public class GamePanel extends JPanel {
     }
 
     public void updatePanel(){
-        int rows = boardmodel.getGridRows();
-        int columns = boardmodel.getGridColumns();
+        int rows = boardModel.getGridRows();
+        int columns = boardModel.getGridColumns();
 
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < columns; j++){
-                buttons[i][j].setBackground(TileColor.IDtoColor(boardmodel.getBoard()[i][j].getColorID()));
+                buttons[i][j].setBackground(TileColor.IDtoColor(boardModel.getBoard()[i][j].getColorID()));
             }
         }
     }

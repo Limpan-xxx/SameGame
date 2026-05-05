@@ -1,7 +1,16 @@
 package Presentation;
 
+import Model.BoardModel;
+
 public class GamePresenter {
-    public static void printTest(int row, int column) {
-        System.out.println(row + " " + column);
+    BoardModel boardModel;
+
+    public GamePresenter(BoardModel boardModel){
+        this.boardModel = boardModel;
+    }
+
+    public void tileClicked(int row, int column) {
+        boardModel.removeTile(row, column);
+
     }
 }
