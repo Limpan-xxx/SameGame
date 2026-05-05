@@ -1,6 +1,7 @@
 package View;
 
 import Model.BoardModel;
+import Model.Observers.GameObserver;
 import Presentation.GamePresenter;
 
 import javax.swing.*;
@@ -8,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements GameObserver {
     int tileSize = 35;
     JButton[][] buttons;
     private BoardModel boardModel;
@@ -18,6 +19,8 @@ public class GamePanel extends JPanel {
         int rows = boardModel.getGridRows();
         int columns = boardModel.getGridColumns();
         this.buttons = new JButton[rows][columns];
+
+        boardModel.addObserver(this);
 
         setPreferredSize(new Dimension(rows * this.tileSize, columns * this.tileSize));
         setLayout(new GridLayout(rows, columns));
@@ -50,5 +53,10 @@ public class GamePanel extends JPanel {
                 buttons[i][j].setBackground(TileColor.IDtoColor(boardModel.getBoard()[i][j].getColorID()));
             }
         }
+    }
+
+    @Override
+    public void boardChanged() {
+        updatePanel();
     }
 }

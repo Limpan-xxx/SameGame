@@ -1,11 +1,16 @@
 package Model;
 
 
+import Model.Observers.GameObserver;
+
+import java.util.ArrayList;
+
 public class BoardModel {
     private Tile[][] board;
     private final int gridColumns;
     private final int gridRows;
 
+    private ArrayList<GameObserver> observers = new ArrayList<>();
 
     public BoardModel(int gridRows, int gridColumns){
         this.board = new Tile[gridRows][gridColumns];
@@ -21,6 +26,16 @@ public class BoardModel {
         }
     }
 
+    public void addObserver(GameObserver observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObservers() {
+        for (GameObserver observer : observers) {
+            observer.boardChanged();
+        }
+    }
+
     public void removeTile(int row, int column){
         System.out.println();
         this.board[row][column].setColorID(0); // sets the tile to DARK_GRAY
@@ -33,6 +48,8 @@ public class BoardModel {
                 System.out.print(board[i][j].getColorID() + " ");
             }
         }
+
+        notifyObservers();
     }
 
     public Tile[][] getBoard(){

@@ -11,6 +11,5 @@ public class GamePresenter {
 
     public void tileClicked(int row, int column) {
         boardModel.removeTile(row, column);
-
     }
 }
