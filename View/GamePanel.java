@@ -1,9 +1,12 @@
 package View;
 
 import Model.BoardModel;
+import Presentation.GamePresenter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GamePanel extends JPanel {
     int tileSize = 35;
@@ -26,6 +29,14 @@ public class GamePanel extends JPanel {
                 Tile.setBackground(TileColor.IDtoColor(boardmodel.getBoard()[i][j].getColorID()));
                 buttons[i][j] = Tile;
                 add(Tile);
+                int row = i;
+                int column = j;
+                Tile.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        GamePresenter.printTest(row, column);
+                    }
+                });
             }
         }
     }

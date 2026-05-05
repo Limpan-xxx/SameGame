@@ -19,7 +19,7 @@ public class Board {
         Menu menu = new Menu();
         Scoreboard scoreboard = new Scoreboard();
 
-        BoardModel boardmodel = new BoardModel(5,5);
+        BoardModel boardmodel = new BoardModel(10,5);
 
         JPanel gamePanelWrapper = new JPanel(new GridBagLayout());
         GamePanel gamepanel = new GamePanel(boardmodel);
