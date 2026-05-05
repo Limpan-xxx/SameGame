@@ -13,7 +13,7 @@ public class GamePanel extends JPanel {
     public GamePanel(BoardModel boardmodel) {
         this.boardmodel = boardmodel;
         int rows = boardmodel.getGridRows();
-        int columns = boardmodel.getGridRows();
+        int columns = boardmodel.getGridColumns();
         this.buttons = new JButton[rows][columns];
 
         setPreferredSize(new Dimension(rows * this.tileSize, columns * this.tileSize));
