@@ -94,6 +94,45 @@ public class BoardModel {
     }
 
     /**
+     * makes the tiles fall down to their correct spot after removing their neighbors
+     */
+    public void gravityFalls() {
+        for (int i = 0; i < gridColumns; i++) {
+
+            ArrayList<Integer> filledColumnColors = new ArrayList<>();
+
+            // Samla färgerna i kolumnen, nerifrån och upp
+            for (int j = gridRows - 1; j >= 0; j--) {
+                if (board[j][i].getColorID() != 0) {
+                    filledColumnColors.add(board[j][i].getColorID());
+                }
+            }
+
+            int rowIndex = gridRows - 1;
+
+            // Lägg tillbaka färgerna längst ner i samma kolumn
+            for (int colorID : filledColumnColors) {
+                board[rowIndex][i].setColorID(colorID);
+                rowIndex--;
+            }
+
+            // Fyll resten ovanför med gråa rutor
+            while (rowIndex >= 0) {
+                board[rowIndex][i].setColorID(0);
+                rowIndex--;
+            }
+        }
+        for (int i = 0; i < gridRows; i++) {
+            System.out.println();
+            for (int j = 0; j < gridColumns; j++) {
+                System.out.print(board[i][j].getColorID() + " ");
+            }
+        }
+        notifyObservers();
+    }
+
+
+    /**
      *
      * @param row index on board
      * @param column index on board
@@ -115,12 +154,6 @@ public class BoardModel {
 
         // för debug konsol
         System.out.println("removed " + row + " " + column);
-        for (int i = 0; i < gridRows; i++) {
-            System.out.println();
-            for (int j = 0; j < gridColumns; j++) {
-                System.out.print(board[i][j].getColorID() + " ");
-            }
-        }
 
         notifyObservers();
     }

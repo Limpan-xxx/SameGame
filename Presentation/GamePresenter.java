@@ -22,5 +22,7 @@ public class GamePresenter {
         for (Point p : neighbors) {
             boardModel.removeTile(p.x, p.y);
         }
+        boardModel.gravityFalls();
+        // gravity and vertical shift
     }
 }
