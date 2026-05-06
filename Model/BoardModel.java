@@ -3,6 +3,7 @@ package Model;
 
 import Model.Observers.GameObserver;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class BoardModel {
@@ -34,6 +35,31 @@ public class BoardModel {
         for (GameObserver observer : observers) {
             observer.boardChanged();
         }
+    }
+
+    public ArrayList<Point> searchConnected(int row, int column){
+        ArrayList<Point> ConnectedCoordinates = new ArrayList<>();
+
+        ConnectedCoordinates.add(new Point(row, column));
+
+        if(isTile(row-1,column) && this.board[row][column].getColorID() == this.board[row-1][column].getColorID()){ // upp
+            ConnectedCoordinates.add(new Point(row-1,column));
+        }
+        if (isTile(row+1,column) && this.board[row][column].getColorID() == this.board[row+1][column].getColorID()) { // ner
+            ConnectedCoordinates.add(new Point(row+1,column));
+        }
+        if (isTile(row,column-1) && this.board[row][column].getColorID() == this.board[row][column-1].getColorID()) { // vänster
+            ConnectedCoordinates.add(new Point(row,column-1));
+        }
+        if (isTile(row,column+1) && this.board[row][column].getColorID() == this.board[row][column+1].getColorID()) { // höger
+            ConnectedCoordinates.add(new Point(row,column+1));
+        }
+
+        return ConnectedCoordinates;
+    }
+
+    public boolean isTile(int row, int column){
+        return row < board.length && column < board[0].length && row >= 0 && column >= 0;
     }
 
     public void removeTile(int row, int column){

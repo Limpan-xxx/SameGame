@@ -1,7 +1,6 @@
 package View;
 
 import Model.BoardModel;
-import Model.Tile;
 import Model.Observers.GameObserver;
 import Presentation.GamePresenter;
 
