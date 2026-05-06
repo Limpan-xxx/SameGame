@@ -55,7 +55,6 @@ public class GamePanel extends JPanel implements GameObserver {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                // buttons[i][j].setBackground(TileColor.IDtoColor(boardModel.getBoard()[i][j].getColorID()));
                 fillTileColor(buttons[i][j], i, j);
             }
         }
