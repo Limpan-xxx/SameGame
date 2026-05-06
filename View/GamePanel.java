@@ -1,6 +1,7 @@
 package View;
 
 import Model.BoardModel;
+import Model.Tile;
 import Model.Observers.GameObserver;
 import Presentation.GamePresenter;
 
@@ -29,7 +30,7 @@ public class GamePanel extends JPanel implements GameObserver {
         for (int i = 0; i < boardModel.getGridRows(); i++) {
             for (int j = 0; j < boardModel.getGridColumns(); j++) {
                 JButton Tile = new JButton();
-                Tile.setBackground(TileColor.IDtoColor(boardModel.getBoard()[i][j].getColorID()));
+                fillTileColor(Tile, i, j);
                 buttons[i][j] = Tile;
                 add(Tile);
                 int row = i;
@@ -44,13 +45,18 @@ public class GamePanel extends JPanel implements GameObserver {
         }
     }
 
-    public void updatePanel(){
+    public void fillTileColor(JButton Tile, int x, int y) {
+        Tile.setBackground(TileColor.IDtoColor(boardModel.getBoard()[x][y].getColorID()));
+    }
+
+    public void updatePanel() {
         int rows = boardModel.getGridRows();
         int columns = boardModel.getGridColumns();
 
-        for(int i = 0; i < rows; i++){
-            for(int j = 0; j < columns; j++){
-                buttons[i][j].setBackground(TileColor.IDtoColor(boardModel.getBoard()[i][j].getColorID()));
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                // buttons[i][j].setBackground(TileColor.IDtoColor(boardModel.getBoard()[i][j].getColorID()));
+                fillTileColor(buttons[i][j], i, j);
             }
         }
     }
