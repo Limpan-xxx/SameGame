@@ -12,6 +12,11 @@ public class GamePresenter {
         this.boardModel = boardModel;
     }
 
+    /**
+     *
+     * @param row index of the Tile
+     * @param column index of the Tile
+     */
     public void tileClicked(int row, int column) {
         ArrayList<Point> neighbors = boardModel.searchConnected(row, column);
         for (Point p : neighbors) {

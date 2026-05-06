@@ -48,6 +48,9 @@ public class GamePanel extends JPanel implements GameObserver {
         Tile.setBackground(TileColor.IDtoColor(boardModel.getBoard()[x][y].getColorID()));
     }
 
+    /**
+     * updates the panel based on if Tile[][] board has changed
+     */
     public void updatePanel() {
         int rows = boardModel.getGridRows();
         int columns = boardModel.getGridColumns();

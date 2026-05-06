@@ -26,22 +26,41 @@ public class BoardModel {
         }
     }
 
+    /**
+     *
+     * @param observer the observer of the game, Tile[][] board
+     */
     public void addObserver(GameObserver observer) {
         observers.add(observer);
     }
 
+    /**
+     * notifies observers that Tile[][] board has changed
+     */
     private void notifyObservers() {
         for (GameObserver observer : observers) {
             observer.boardChanged();
         }
     }
 
+    /**
+     *
+     * @param row index to tile
+     * @param column index to tile
+     * @return the finished ArrayList filled with index to connected Tiles
+     */
     public ArrayList<Point> searchConnected(int row, int column) {
         ArrayList<Point> connectedCoordinates = new ArrayList<>();
         searchConnected(row, column, connectedCoordinates);
         return connectedCoordinates;
     }
 
+    /**
+     *
+     * @param row index to tile
+     * @param column index to tile
+     * @param connectedCoordinates ArrayList filled with index to connected Tiles, recursive
+     */
     private void searchConnected(int row, int column, ArrayList<Point> connectedCoordinates) {
         Point currentPoint = new Point(row, column);
 
@@ -74,11 +93,23 @@ public class BoardModel {
         }
     }
 
+    /**
+     *
+     * @param row index on board
+     * @param column index on board
+     * @return boolean value if index belongs to board[][]
+     */
     public boolean isTile(int row, int column) {
         return row < board.length && column < board[0].length && row >= 0 && column >= 0;
     }
 
+    /**
+     * Removes tile from board
+     * @param row index to tile to remove
+     * @param column index to tile to remove
+     */
     public void removeTile(int row, int column) {
+        System.out.println();
         System.out.println();
         this.board[row][column].setColorID(0); // sets the tile to DARK_GRAY
 
@@ -94,6 +125,10 @@ public class BoardModel {
         notifyObservers();
     }
 
+    /**
+     *
+     * @return the main playboard
+     */
     public Tile[][] getBoard() {
         return board;
     }
