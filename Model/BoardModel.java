@@ -1,7 +1,6 @@
 package Model;
 
 import Model.Observers.GameObserver;
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -9,9 +8,21 @@ public class BoardModel {
     private Tile[][] board;
     private final int gridColumns;
     private final int gridRows;
+    private int colors;
 
     private ArrayList<GameObserver> observers = new ArrayList<>();
-
+    public BoardModel(int gridRows, int gridColumns, int colors) {
+    this.colors = colors;
+    this.gridRows = gridRows;
+    this.gridColumns = gridColumns;
+    this.board = new Tile[gridRows][gridColumns];
+    for (int i = 0; i < gridRows; i++) {
+        for (int j = 0; j < gridColumns; j++) {
+            int ID = (int) (Math.random() * colors) + 1;
+            board[i][j] = new Tile(ID);
+        }
+    }
+}
     public BoardModel(int gridRows, int gridColumns) {
         this.board = new Tile[gridRows][gridColumns];
         this.gridRows = gridRows;

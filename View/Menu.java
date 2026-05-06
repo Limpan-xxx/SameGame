@@ -1,11 +1,11 @@
 package View;
-
+import Presentation.GamePresenter;
 import java.awt.*;
 import javax.swing.*;
 
 public class Menu extends JPanel {
 
-    public Menu() {
+    public Menu(GamePresenter gamePresenter) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JButton undo = new JButton("Undo");
@@ -32,5 +32,6 @@ public class Menu extends JPanel {
         add(Box.createVerticalStrut(20));
 
         add(exit);
+        
     }
 }
