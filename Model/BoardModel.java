@@ -9,37 +9,25 @@ public class BoardModel {
     private Tile[][] board;
     private final int gridColumns;
     private final int gridRows;
-    private int colors;
 
     private ArrayList<GameObserver> observers = new ArrayList<>();
     private Tile[][] originalBoard;
     private Stack<Tile[][]> undoStack = new Stack<>();
     private Stack<Tile[][]> redoStack = new Stack<>();
-    public BoardModel(int gridRows, int gridColumns, int colors) {
-    this.colors = colors;
-    this.gridRows = gridRows;
-    this.gridColumns = gridColumns;
-    this.board = new Tile[gridRows][gridColumns];
-    for (int i = 0; i < gridRows; i++) {
-        for (int j = 0; j < gridColumns; j++) {
-            int ID = (int) (Math.random() * colors) + 1;
-            board[i][j] = new Tile(ID);
-        }
-    }
-    this.originalBoard = copyBoard(board);
-}
-    public BoardModel(int gridRows, int gridColumns) {
+
+    public BoardModel(int gridRows, int gridColumns, int numberOfColors) {
         this.board = new Tile[gridRows][gridColumns];
         this.gridRows = gridRows;
         this.gridColumns = gridColumns;
+
         for (int i = 0; i < gridRows; i++) {
-            System.out.println();
             for (int j = 0; j < gridColumns; j++) {
-                int ID = randomColorID();
+                int ID = randomColorID(numberOfColors);
                 board[i][j] = new Tile(ID);
-                System.out.print(ID + " ");
             }
         }
+
+        this.originalBoard = copyBoard(board);
     }
 
     /**
@@ -61,7 +49,7 @@ public class BoardModel {
 
     /**
      *
-     * @param row index to tile
+     * @param row    index to tile
      * @param column index to tile
      * @return the finished ArrayList filled with index to connected Tiles
      */
@@ -73,9 +61,10 @@ public class BoardModel {
 
     /**
      *
-     * @param row index to tile
-     * @param column index to tile
-     * @param connectedCoordinates ArrayList filled with index to connected Tiles, recursive
+     * @param row                  index to tile
+     * @param column               index to tile
+     * @param connectedCoordinates ArrayList filled with index to connected Tiles,
+     *                             recursive
      */
     private void searchConnected(int row, int column, ArrayList<Point> connectedCoordinates) {
         Point currentPoint = new Point(row, column);
@@ -110,7 +99,8 @@ public class BoardModel {
     }
 
     /**
-     * makes the tiles fall down to their correct spot after removing their neighbors
+     * makes the tiles fall down to their correct spot after removing their
+     * neighbors
      */
     public void gravityFalls() {
         for (int i = 0; i < gridColumns; i++) {
@@ -147,10 +137,9 @@ public class BoardModel {
         notifyObservers();
     }
 
-
     /**
      *
-     * @param row index on board
+     * @param row    index on board
      * @param column index on board
      * @return boolean value if index belongs to board[][]
      */
@@ -160,7 +149,8 @@ public class BoardModel {
 
     /**
      * Removes tile from board
-     * @param row index to tile to remove
+     * 
+     * @param row    index to tile to remove
      * @param column index to tile to remove
      */
     public void removeTile(int row, int column) {
@@ -183,10 +173,10 @@ public class BoardModel {
     }
 
     /**
-     * @return random colorID
+     * @return n number of random colorID's
      */
-    private int randomColorID() {
-        return (int) (Math.random() * 3) + 1; // 1=red, 2=green, 3=blue
+    private int randomColorID(int n) {
+        return (int) (Math.random() * n) + 1; // 1=red, 2=green, 3=blue, 4=yellow, 5=orange, 6=pink
     }
 
     /**
@@ -202,10 +192,10 @@ public class BoardModel {
     public int getGridRows() {
         return gridRows;
     }
-    
+
     public void saveState() {
-    undoStack.push(copyBoard(board));
-    redoStack.clear();
+        undoStack.push(copyBoard(board));
+        redoStack.clear();
     }
 
     public void undo() {
