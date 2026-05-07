@@ -21,6 +21,9 @@ public class GamePresenter {
     public void tileClicked(int row, int column) {
         boardModel.saveState();
         ArrayList<Point> neighbors = boardModel.searchConnected(row, column);
+        if(neighbors.size() < 2){
+            return;
+        }
         for (Point p : neighbors) {
             boardModel.removeTile(p.x, p.y);
         }
