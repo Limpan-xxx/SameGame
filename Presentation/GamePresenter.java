@@ -28,7 +28,7 @@ public class GamePresenter {
             boardModel.removeTile(p.x, p.y);
         }
         boardModel.gravityFalls();
-        // gravity and vertical shift
+        boardModel.shiftLeft();
     }
     public void undo() { boardModel.undo(); }
     public void redo() { boardModel.redo(); }

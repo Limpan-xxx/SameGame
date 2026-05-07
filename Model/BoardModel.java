@@ -134,7 +134,48 @@ public class BoardModel {
                 System.out.print(board[i][j].getColorID() + " ");
             }
         }
+        // notifyObservers(); tror ej behövs för att det finns i slutet som är shiftLeft() som alltid körs i TileClicked()
+    }
+
+    public void shiftLeft() {
+        int targetColumn = 0;
+
+        for (int currentColumn = 0; currentColumn < gridColumns; currentColumn++) {
+
+            if (!isColumnEmpty(currentColumn)) {
+
+                if (currentColumn != targetColumn) {
+                    moveColumn(currentColumn, targetColumn);
+                    clearColumn(currentColumn);
+                }
+
+                targetColumn++;
+            }
+        }
+
         notifyObservers();
+    }
+
+    private boolean isColumnEmpty(int column) {
+        for (int row = 0; row < gridRows; row++) {
+            if (board[row][column].getColorID() != 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void moveColumn(int fromColumn, int toColumn) {
+        for (int row = 0; row < gridRows; row++) {
+            board[row][toColumn].setColorID(board[row][fromColumn].getColorID());
+        }
+    }
+
+    private void clearColumn(int column) {
+        for (int row = 0; row < gridRows; row++) {
+            board[row][column].setColorID(0);
+        }
     }
 
     /**
@@ -161,7 +202,7 @@ public class BoardModel {
         // för debug konsol
         System.out.println("removed " + row + " " + column);
 
-        notifyObservers();
+        //notifyObservers();
     }
 
     /**
