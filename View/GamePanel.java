@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GamePanel extends JPanel implements GameObserver {
-    int tileSize = 35;
+    int tileSize = 50;
     JButton[][] buttons;
     private BoardModel boardModel;
 

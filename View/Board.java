@@ -34,9 +34,10 @@ public class Board {
     frame.setLayout(new BorderLayout());
 
     JLabel title = new JLabel("SameGame", SwingConstants.CENTER);
+    title.setFont(new Font("SansSerif", Font.BOLD, 30));
     BoardModel boardModel = new BoardModel(8, 8, colors);
-    GamePresenter gamePresenter = new GamePresenter(boardModel);
-    Menu menu = new Menu();
+    GamePresenter gamePresenter = new GamePresenter(boardModel, this);
+    Menu menu = new Menu(gamePresenter);
     Scoreboard scoreboard = new Scoreboard();
     JPanel gamePanelWrapper = new JPanel(new GridBagLayout());
     GamePanel gamepanel = new GamePanel(boardModel, gamePresenter);
@@ -44,10 +45,22 @@ public class Board {
 
     frame.add(title, BorderLayout.NORTH);
     frame.add(menu, BorderLayout.EAST);
+    JPanel leftSpacer = new JPanel();
+    leftSpacer.setPreferredSize(menu.getPreferredSize());
+    frame.add(leftSpacer, BorderLayout.WEST);
     frame.add(gamePanelWrapper, BorderLayout.CENTER);
     frame.add(scoreboard, BorderLayout.SOUTH);
 
     frame.revalidate();
     frame.repaint();
-}
-}
+    }
+
+    public void returnToStartMenu() {
+        frame.getContentPane().removeAll();
+        StartMenu startMenu = new StartMenu(this);
+        frame.add(startMenu);
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    }

@@ -7,7 +7,7 @@ public class Menu extends JPanel {
 
     public Menu(GamePresenter gamePresenter) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
+        setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
         JButton undo = new JButton("Undo");
         JButton redo = new JButton("Redo");
         JButton reset = new JButton("Reset");
@@ -20,7 +20,7 @@ public class Menu extends JPanel {
         reset.setMaximumSize(buttonSize);
         exit.setMaximumSize(buttonSize);
 
-        add(Box.createVerticalStrut(50));
+        add(Box.createVerticalGlue());
 
         add(undo);
         add(Box.createVerticalStrut(20));
@@ -32,6 +32,15 @@ public class Menu extends JPanel {
         add(Box.createVerticalStrut(20));
 
         add(exit);
+        add(Box.createVerticalGlue());
+        undo.addActionListener(e -> gamePresenter.undo());
+        redo.addActionListener(e -> gamePresenter.redo());
+        reset.addActionListener(e -> gamePresenter.reset());
+        exit.addActionListener(e -> gamePresenter.exitToMenu());
+        undo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        redo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        reset.setAlignmentX(Component.CENTER_ALIGNMENT);
+        exit.setAlignmentX(Component.CENTER_ALIGNMENT);
         
     }
 }

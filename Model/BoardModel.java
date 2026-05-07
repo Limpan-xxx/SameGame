@@ -3,6 +3,7 @@ package Model;
 import Model.Observers.GameObserver;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class BoardModel {
     private Tile[][] board;
@@ -11,6 +12,9 @@ public class BoardModel {
     private int colors;
 
     private ArrayList<GameObserver> observers = new ArrayList<>();
+    private Tile[][] originalBoard;
+    private Stack<Tile[][]> undoStack = new Stack<>();
+    private Stack<Tile[][]> redoStack = new Stack<>();
     public BoardModel(int gridRows, int gridColumns, int colors) {
     this.colors = colors;
     this.gridRows = gridRows;
@@ -22,6 +26,7 @@ public class BoardModel {
             board[i][j] = new Tile(ID);
         }
     }
+    this.originalBoard = copyBoard(board);
 }
     public BoardModel(int gridRows, int gridColumns) {
         this.board = new Tile[gridRows][gridColumns];
@@ -196,5 +201,43 @@ public class BoardModel {
      */
     public int getGridRows() {
         return gridRows;
+    }
+    
+    public void saveState() {
+    undoStack.push(copyBoard(board));
+    redoStack.clear();
+    }
+
+    public void undo() {
+        if (!undoStack.isEmpty()) {
+            redoStack.push(copyBoard(board));
+            board = undoStack.pop();
+            notifyObservers();
+        }
+    }
+
+    public void redo() {
+        if (!redoStack.isEmpty()) {
+            undoStack.push(copyBoard(board));
+            board = redoStack.pop();
+            notifyObservers();
+        }
+    }
+
+    public void reset() {
+        undoStack.clear();
+        redoStack.clear();
+        board = copyBoard(originalBoard);
+        notifyObservers();
+    }
+
+    private Tile[][] copyBoard(Tile[][] source) {
+        Tile[][] copy = new Tile[gridRows][gridColumns];
+        for (int i = 0; i < gridRows; i++) {
+            for (int j = 0; j < gridColumns; j++) {
+                copy[i][j] = new Tile(source[i][j].getColorID());
+            }
+        }
+        return copy;
     }
 }
