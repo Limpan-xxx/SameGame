@@ -1,12 +1,15 @@
 package View;
 
 import Model.BoardModel;
+import Model.ScoreboardModel;
 import Presentation.GamePresenter;
 import java.awt.*;
 import javax.swing.*;
 
 public class Board {
     private JFrame frame;
+    private final int BOARD_ROWS = 8;
+    private final int BOARD_COLUMNS = 8;
 
     public Board() {
         frame = new JFrame("SameGame");
@@ -38,8 +41,9 @@ public class Board {
 
         JLabel title = new JLabel("SameGame", SwingConstants.CENTER);
         title.setFont(new Font("SansSerif", Font.BOLD, 30));
-        BoardModel boardModel = new BoardModel(8, 8, numberOfColors);
-        GamePresenter gamePresenter = new GamePresenter(boardModel, this);
+        BoardModel boardModel = new BoardModel(BOARD_ROWS, BOARD_COLUMNS, numberOfColors);
+        ScoreboardModel scoreboardModel = new ScoreboardModel(BOARD_ROWS*BOARD_COLUMNS);
+        GamePresenter gamePresenter = new GamePresenter(boardModel, this, scoreboardModel);
         Menu menu = new Menu(gamePresenter);
         Scoreboard scoreboard = new Scoreboard();
         JPanel gamePanelWrapper = new JPanel(new GridBagLayout());

@@ -1,6 +1,7 @@
 package Presentation;
 
 import Model.BoardModel;
+import Model.ScoreboardModel;
 import View.Board;
 import java.awt.*;
 import java.util.ArrayList;
@@ -8,9 +9,11 @@ import java.util.ArrayList;
 public class GamePresenter {
     BoardModel boardModel;
     Board board;
-    public GamePresenter(BoardModel boardModel, Board board){
+    ScoreboardModel scoreboardModel;
+    public GamePresenter(BoardModel boardModel, Board board, ScoreboardModel scoreboardModel){
         this.boardModel = boardModel;
         this.board = board;
+        this.scoreboardModel = scoreboardModel;
     }
 
     /**
@@ -29,6 +32,7 @@ public class GamePresenter {
         }
         boardModel.gravityFalls();
         boardModel.shiftLeft();
+        scoreboardModel.updateAfterMove(neighbors.size());
     }
     public void undo() { boardModel.undo(); }
     public void redo() { boardModel.redo(); }
