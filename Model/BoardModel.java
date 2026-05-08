@@ -98,6 +98,33 @@ public class BoardModel {
         }
     }
 
+    public boolean hasMoves() {
+        for (int row = 0; row < gridRows; row++) {
+            for (int column = 0; column < gridColumns; column++) {
+                int colorID = this.board[row][column].getColorID();
+
+                if (board[row][column].getColorID() == 0) {
+                    continue;
+                }
+
+                if (isTile(row + 1, column)
+                        && this.board[row + 1][column].getColorID() == colorID) {
+                    return true;
+                }
+
+                if (isTile(row, column + 1)
+                        && this.board[row][column + 1].getColorID() == colorID) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean win() {
+        return board[gridRows - 1][0].getColorID() == 0;
+    }
+
     /**
      * makes the tiles fall down to their correct spot after removing their
      * neighbors
@@ -134,7 +161,8 @@ public class BoardModel {
                 System.out.print(board[i][j].getColorID() + " ");
             }
         }
-        // notifyObservers(); tror ej behövs för att det finns i slutet som är shiftLeft() som alltid körs i TileClicked()
+        // notifyObservers(); tror ej behövs för att det finns i slutet som är
+        // shiftLeft() som alltid körs i TileClicked()
     }
 
     public void shiftLeft() {
@@ -202,7 +230,7 @@ public class BoardModel {
         // för debug konsol
         System.out.println("removed " + row + " " + column);
 
-        //notifyObservers();
+        // notifyObservers();
     }
 
     /**

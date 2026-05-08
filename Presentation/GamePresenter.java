@@ -35,6 +35,11 @@ public class GamePresenter {
         boardModel.gravityFalls();
         boardModel.shiftLeft();
         scoreboardModel.updateAfterMove(neighbors.size());
+        if (boardModel.win()) {
+            System.err.println("win");
+        } else if (!boardModel.hasMoves()) {
+            System.out.println("loose");
+        }
     }
 
     public void undo() {
