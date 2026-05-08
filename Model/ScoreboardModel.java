@@ -1,15 +1,43 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.Stack;
+
+import Model.Observers.GameObserver;
+
 public class ScoreboardModel {
 
     int currentScore;
     int lastMoveScore;
     int remainingTiles;
+    private ArrayList<GameObserver> observers = new ArrayList<>();
+    private Stack<Integer> undoStackCurrentScore = new Stack<>();
+    private Stack<Integer> redoStackCurrentScore = new Stack<>();
+
+    private Stack<Integer> redoStackRemainingTiles = new Stack<>();
+    private Stack<Integer> undoStackRemainingTiles = new Stack<>();
+
+    private Stack<Integer> undoStackLastMoveScore = new Stack<>();
+    private Stack<Integer> redoStackLastMoveScore = new Stack<>();
 
     public ScoreboardModel(int totalTiles) {
         currentScore = 0;
         lastMoveScore = 0;
         remainingTiles = totalTiles;
+    }
+
+    /**
+     *
+     * @param observer the observer of the game, Tile[][] board
+     */
+    public void addObserver(GameObserver observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObservers() {
+        for (GameObserver observer : observers) {
+            observer.boardChanged();
+        }
     }
 
     public int calculateMoveScore(int numberOfRemovedTiles) {
@@ -32,12 +60,67 @@ public class ScoreboardModel {
         if (remainingTiles < 0) {
             remainingTiles = 0;
         }
+
+        notifyObservers();
+    }
+
+    public void saveState() {
+        undoStackCurrentScore.push(currentScore);
+        undoStackRemainingTiles.push(remainingTiles);
+        undoStackLastMoveScore.push(lastMoveScore);
+
+        redoStackCurrentScore.clear();
+        redoStackRemainingTiles.clear();
+        redoStackLastMoveScore.clear();
     }
 
     public void reset(int totalTiles) {
+        undoStackCurrentScore.clear();
+        undoStackRemainingTiles.clear();
+        undoStackLastMoveScore.clear();
+
+        redoStackCurrentScore.clear();
+        redoStackRemainingTiles.clear();
+        redoStackLastMoveScore.clear();
+
         currentScore = 0;
         lastMoveScore = 0;
         remainingTiles = totalTiles;
+        notifyObservers();
+    }
+
+    public void undo() {
+        if (!undoStackCurrentScore.isEmpty()
+                && !undoStackRemainingTiles.isEmpty()
+                && !undoStackLastMoveScore.isEmpty()) {
+
+            redoStackCurrentScore.push(currentScore);
+            redoStackRemainingTiles.push(remainingTiles);
+            redoStackLastMoveScore.push(lastMoveScore);
+
+            currentScore = undoStackCurrentScore.pop();
+            remainingTiles = undoStackRemainingTiles.pop();
+            lastMoveScore = undoStackLastMoveScore.pop();
+
+            notifyObservers();
+        }
+    }
+
+    public void redo() {
+        if (!redoStackCurrentScore.isEmpty()
+                && !redoStackRemainingTiles.isEmpty()
+                && !redoStackLastMoveScore.isEmpty()) {
+
+            undoStackCurrentScore.push(currentScore);
+            undoStackRemainingTiles.push(remainingTiles);
+            undoStackLastMoveScore.push(lastMoveScore);
+
+            currentScore = redoStackCurrentScore.pop();
+            remainingTiles = redoStackRemainingTiles.pop();
+            lastMoveScore = redoStackLastMoveScore.pop();
+
+            notifyObservers();
+        }
     }
 
     public int getCurrentScore() {

@@ -8,8 +8,8 @@ import javax.swing.*;
 
 public class Board {
     private JFrame frame;
-    private final int BOARD_ROWS = 8;
-    private final int BOARD_COLUMNS = 8;
+    public final int BOARD_ROWS = 8;
+    public final int BOARD_COLUMNS = 8;
 
     public Board() {
         frame = new JFrame("SameGame");
@@ -42,10 +42,10 @@ public class Board {
         JLabel title = new JLabel("SameGame", SwingConstants.CENTER);
         title.setFont(new Font("SansSerif", Font.BOLD, 30));
         BoardModel boardModel = new BoardModel(BOARD_ROWS, BOARD_COLUMNS, numberOfColors);
-        ScoreboardModel scoreboardModel = new ScoreboardModel(BOARD_ROWS*BOARD_COLUMNS);
+        ScoreboardModel scoreboardModel = new ScoreboardModel(BOARD_ROWS * BOARD_COLUMNS);
         GamePresenter gamePresenter = new GamePresenter(boardModel, this, scoreboardModel);
         Menu menu = new Menu(gamePresenter);
-        Scoreboard scoreboard = new Scoreboard();
+        Scoreboard scoreboard = new Scoreboard(scoreboardModel);
         JPanel gamePanelWrapper = new JPanel(new GridBagLayout());
         GamePanel gamepanel = new GamePanel(boardModel, gamePresenter);
         gamePanelWrapper.add(gamepanel);

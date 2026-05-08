@@ -10,7 +10,8 @@ public class GamePresenter {
     BoardModel boardModel;
     Board board;
     ScoreboardModel scoreboardModel;
-    public GamePresenter(BoardModel boardModel, Board board, ScoreboardModel scoreboardModel){
+
+    public GamePresenter(BoardModel boardModel, Board board, ScoreboardModel scoreboardModel) {
         this.boardModel = boardModel;
         this.board = board;
         this.scoreboardModel = scoreboardModel;
@@ -18,13 +19,14 @@ public class GamePresenter {
 
     /**
      *
-     * @param row index of the Tile
+     * @param row    index of the Tile
      * @param column index of the Tile
      */
     public void tileClicked(int row, int column) {
         boardModel.saveState();
+        scoreboardModel.saveState();
         ArrayList<Point> neighbors = boardModel.searchConnected(row, column);
-        if(neighbors.size() < 2){
+        if (neighbors.size() < 2) {
             return;
         }
         for (Point p : neighbors) {
@@ -34,8 +36,23 @@ public class GamePresenter {
         boardModel.shiftLeft();
         scoreboardModel.updateAfterMove(neighbors.size());
     }
-    public void undo() { boardModel.undo(); }
-    public void redo() { boardModel.redo(); }
-    public void reset() { boardModel.reset(); }
-    public void exitToMenu() { board.returnToStartMenu(); }
+
+    public void undo() {
+        boardModel.undo();
+        scoreboardModel.undo();
+    }
+
+    public void redo() {
+        boardModel.redo();
+        scoreboardModel.redo();
+    }
+
+    public void reset() {
+        boardModel.reset();
+        scoreboardModel.reset(board.BOARD_COLUMNS * board.BOARD_ROWS);
+    }
+
+    public void exitToMenu() {
+        board.returnToStartMenu();
+    }
 }
