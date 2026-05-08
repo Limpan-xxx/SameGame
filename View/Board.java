@@ -70,4 +70,8 @@ public class Board {
         frame.repaint();
     }
 
+    public JFrame getFrame() {
+    return frame;
+    }
+
 }

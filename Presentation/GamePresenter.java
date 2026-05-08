@@ -5,6 +5,7 @@ import Model.ScoreboardModel;
 import View.Board;
 import java.awt.*;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class GamePresenter {
     BoardModel boardModel;
@@ -35,11 +36,14 @@ public class GamePresenter {
         boardModel.gravityFalls();
         boardModel.shiftLeft();
         scoreboardModel.updateAfterMove(neighbors.size());
+        if (!boardModel.hasMoves()) {
+
         if (boardModel.win()) {
-            System.err.println("win");
-        } else if (!boardModel.hasMoves()) {
-            System.out.println("loose");
+            JOptionPane.showMessageDialog(board.getFrame(), " You Won! 🎉","Game Over",    JOptionPane.PLAIN_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(board.getFrame(), " YOU LOST! 😢","Game Over",    JOptionPane.PLAIN_MESSAGE);
         }
+}
     }
 
     public void undo() {
