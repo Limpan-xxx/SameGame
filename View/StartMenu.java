@@ -49,6 +49,19 @@ public class StartMenu extends JPanel {
         start.addActionListener(e -> board.startGame(selectedLevel));
         content.add(start);
 
+        content.add(Box.createVerticalStrut(100));
+
+        JToggleButton controller = new JToggleButton("Keyboard", false);
+        controller.setFocusable(false);
+        controller.setBackground(Color.red);
+        controller.setAlignmentX(Component.CENTER_ALIGNMENT);
+        controller.setMaximumSize(new Dimension(200, 40));
+        controller.setPreferredSize(new Dimension(200, 40));
+        controller.setMinimumSize(new Dimension(200, 40));
+        controller.addActionListener(e -> {board.inputToggleController(controller.isSelected());
+                });
+        content.add(controller, BorderLayout.WEST);
+
         add(content); // GridBagLayout centrerar automatiskt
     }
 

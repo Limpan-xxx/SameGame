@@ -16,9 +16,13 @@ public class Menu extends JPanel {
         Dimension buttonSize = new Dimension(120, 40);
 
         undo.setMaximumSize(buttonSize);
+        undo.setFocusable(false);
         redo.setMaximumSize(buttonSize);
+        redo.setFocusable(false);
         reset.setMaximumSize(buttonSize);
+        reset.setFocusable(false);
         exit.setMaximumSize(buttonSize);
+        exit.setFocusable(false);
 
         add(Box.createVerticalGlue());
 

@@ -6,8 +6,6 @@ import Presentation.GamePresenter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GamePanel extends JPanel implements GameObserver {
     int tileSize = 50;
@@ -32,14 +30,6 @@ public class GamePanel extends JPanel implements GameObserver {
                 fillTileColor(Tile, i, j);
                 buttons[i][j] = Tile;
                 add(Tile);
-                int row = i;
-                int column = j;
-                Tile.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        gamePresenter.tileClicked(row, column);
-                    }
-                });
             }
         }
     }
@@ -65,5 +55,9 @@ public class GamePanel extends JPanel implements GameObserver {
     @Override
     public void boardChanged() {
         updatePanel();
+    }
+
+    public JButton[][] getButtons(){
+        return buttons;
     }
 }

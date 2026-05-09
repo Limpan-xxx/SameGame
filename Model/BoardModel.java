@@ -210,10 +210,10 @@ public class BoardModel {
      *
      * @param row    index on board
      * @param column index on board
-     * @return boolean value if index belongs to board[][]
+     * @return boolean value if index belongs to board[][] and if it is colored
      */
     public boolean isTile(int row, int column) {
-        return row < board.length && column < board[0].length && row >= 0 && column >= 0;
+        return row < board.length && column < board[0].length && row >= 0 && column >= 0 && board[row][column].getColorID() != 0;
     }
 
     /**

@@ -3,6 +3,10 @@ package View;
 import Model.BoardModel;
 import Model.ScoreboardModel;
 import Presentation.GamePresenter;
+import View.InputStrategy.InputStrategy;
+import View.InputStrategy.KeyboardStrategy;
+import View.InputStrategy.MouseStrategy;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -10,6 +14,7 @@ public class Board {
     private JFrame frame;
     public final int BOARD_ROWS = 8;
     public final int BOARD_COLUMNS = 8;
+    private boolean controllerModeOn;
 
     public Board() {
         frame = new JFrame("SameGame");
@@ -58,8 +63,19 @@ public class Board {
         frame.add(gamePanelWrapper, BorderLayout.CENTER);
         frame.add(scoreboard, BorderLayout.SOUTH);
 
+        // init settings for controller
+        InputStrategy inputStrategy;
+        if (controllerModeOn) {
+            inputStrategy = new KeyboardStrategy();
+        } else {
+            inputStrategy = new MouseStrategy();
+        }
+
+        inputStrategy.setupInput(gamePresenter, gamepanel);
+
         frame.revalidate();
         frame.repaint();
+        gamepanel.requestFocusInWindow();
     }
 
     public void returnToStartMenu() {
@@ -72,6 +88,10 @@ public class Board {
 
     public JFrame getFrame() {
     return frame;
+    }
+
+    public void inputToggleController(Boolean controllerModeOn){
+        this.controllerModeOn = controllerModeOn;
     }
 
 }
