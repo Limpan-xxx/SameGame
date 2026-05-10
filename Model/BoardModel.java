@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class BoardModel {
-    private Tile[][] board;
+    public Tile[][] board;
     private final int gridColumns;
     private final int gridRows;
 
@@ -130,7 +130,9 @@ public class BoardModel {
      * neighbors
      */
     public void gravityFalls() {
+        DebugPrinter.printSectionStart("GRAVITY FALLS");
         for (int i = 0; i < gridColumns; i++) {
+            boolean columnShifted = false;
 
             ArrayList<Integer> filledColumnColors = new ArrayList<>();
 
@@ -138,6 +140,13 @@ public class BoardModel {
             for (int j = gridRows - 1; j >= 0; j--) {
                 if (board[j][i].getColorID() != 0) {
                     filledColumnColors.add(board[j][i].getColorID());
+                } else {
+
+                    // Om vi hittar en tom ruta UNDER en färgad ruta
+                    // betyder det att gravity kommer ske
+                    if (!filledColumnColors.isEmpty()) {
+                        columnShifted = true;
+                    }
                 }
             }
 
@@ -154,18 +163,26 @@ public class BoardModel {
                 board[rowIndex][i].setColorID(0);
                 rowIndex--;
             }
-        }
-        for (int i = 0; i < gridRows; i++) {
-            System.out.println();
-            for (int j = 0; j < gridColumns; j++) {
-                System.out.print(board[i][j].getColorID() + " ");
+            if (columnShifted) {
+                DebugPrinter.printLine(
+                        "Tiles in column " + i + " shifted down");
             }
         }
+        DebugPrinter.printSectionEnd("GRAVITY FALLS");
+        DebugPrinter.printSectionStart("GAMEBOARD");
+        for (int i = 0; i < gridRows; i++) {
+            for (int j = 0; j < gridColumns; j++) {
+                DebugPrinter.printHorizontalLine(String.valueOf(board[i][j].getColorID()));
+            }
+            DebugPrinter.seperator();
+        }
+        DebugPrinter.printSectionEnd("GAMEBOARD");
         // notifyObservers(); tror ej behövs för att det finns i slutet som är
         // shiftLeft() som alltid körs i TileClicked()
     }
 
     public void shiftLeft() {
+        DebugPrinter.printSectionStart("SHIFT LEFT");
         int targetColumn = 0;
 
         for (int currentColumn = 0; currentColumn < gridColumns; currentColumn++) {
@@ -173,6 +190,7 @@ public class BoardModel {
             if (!isColumnEmpty(currentColumn)) {
 
                 if (currentColumn != targetColumn) {
+                    DebugPrinter.printLine("Shifting column " + currentColumn + " to " + targetColumn);
                     moveColumn(currentColumn, targetColumn);
                     clearColumn(currentColumn);
                 }
@@ -182,6 +200,7 @@ public class BoardModel {
         }
 
         notifyObservers();
+        DebugPrinter.printSectionEnd("SHIFT LEFT");
     }
 
     private boolean isColumnEmpty(int column) {
@@ -213,7 +232,8 @@ public class BoardModel {
      * @return boolean value if index belongs to board[][] and if it is colored
      */
     public boolean isTile(int row, int column) {
-        return row < board.length && column < board[0].length && row >= 0 && column >= 0 && board[row][column].getColorID() != 0;
+        return row < board.length && column < board[0].length && row >= 0 && column >= 0
+                && board[row][column].getColorID() != 0;
     }
 
     /**
@@ -223,14 +243,7 @@ public class BoardModel {
      * @param column index to tile to remove
      */
     public void removeTile(int row, int column) {
-        System.out.println();
-        System.out.println();
         this.board[row][column].setColorID(0); // sets the tile to DARK_GRAY
-
-        // för debug konsol
-        System.out.println("removed " + row + " " + column);
-
-        // notifyObservers();
     }
 
     /**
@@ -242,7 +255,7 @@ public class BoardModel {
     }
 
     /**
-     * @return n number of random colorID's
+     * @return a random color ID in the range 1 to n
      */
     private int randomColorID(int n) {
         return (int) (Math.random() * n) + 1; // 1=red, 2=green, 3=blue, 4=yellow, 5=orange, 6=pink

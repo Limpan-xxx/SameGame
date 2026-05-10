@@ -61,6 +61,11 @@ public class ScoreboardModel {
             remainingTiles = 0;
         }
 
+        DebugPrinter.printSectionStart("SCORE UPDATES");
+        DebugPrinter.printLine("Score increased by: " + lastMoveScore);
+        DebugPrinter.printLine("Current Score: " + currentScore);
+        DebugPrinter.printSectionEnd("SCORE UPDATES");
+
         notifyObservers();
     }
 

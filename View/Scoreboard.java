@@ -48,20 +48,4 @@ public class Scoreboard extends JPanel implements GameObserver {
         setLastMoveScoreLabel(scoreboard.getLastMoveScore());
         setRemainingTilesLabel(scoreboard.getRemainingTiles());
     }
-
-    /*
-     * När vi tar bort en grupp av tiles
-     * 
-     * numberOfRemovedTiles = hämta antal borttagna tiles
-     * 
-     * scoreboardModel.updateAfterMove(numberOfRemovedTiles)
-     * 
-     * scoreboardView.setCurrentScoreLabel(scoreboardModel.getCurrentScore())
-     * 
-     * scoreboardView.SetLastMoveScoreLabel(scoreboardModel.getLastMoveScore())
-     * 
-     * scoreboardView.SetRemainingTilesLabel(scoreboardModel.getRemainingTiles())
-     * 
-     * Slut
-     */
 }

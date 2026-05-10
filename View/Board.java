@@ -87,10 +87,10 @@ public class Board {
     }
 
     public JFrame getFrame() {
-    return frame;
+        return frame;
     }
 
-    public void inputToggleController(Boolean controllerModeOn){
+    public void inputToggleController(Boolean controllerModeOn) {
         this.controllerModeOn = controllerModeOn;
     }
 
