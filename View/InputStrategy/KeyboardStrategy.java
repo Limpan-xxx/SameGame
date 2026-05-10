@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class KeyboardStrategy implements InputStrategy{
+public class KeyboardStrategy implements InputStrategy {
     private int selectedRow = 0;
     private int selectedColumn = 0;
 
@@ -15,30 +15,36 @@ public class KeyboardStrategy implements InputStrategy{
     public void setupInput(GamePresenter gamePresenter, GamePanel gamePanel) {
         JButton[][] buttons = gamePanel.getButtons();
 
+        for (JButton[] row : buttons) {
+            for (JButton button : row) {
+                button.setFocusable(false);
+            }
+        }
+
         gamePanel.setFocusable(true);
         gamePanel.requestFocusInWindow();
 
         gamePanel.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                switch (e.getKeyCode()){
+                switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
-                        if(selectedRow > 0){
+                        if (selectedRow > 0) {
                             selectedRow--;
                         }
                         break;
                     case KeyEvent.VK_DOWN:
-                        if(selectedRow < buttons.length-1){
+                        if (selectedRow < buttons.length - 1) {
                             selectedRow++;
                         }
                         break;
                     case KeyEvent.VK_LEFT:
-                        if(selectedColumn > 0){
+                        if (selectedColumn > 0) {
                             selectedColumn--;
                         }
                         break;
                     case KeyEvent.VK_RIGHT:
-                        if(selectedColumn < buttons[0].length-1){
+                        if (selectedColumn < buttons[0].length - 1) {
                             selectedColumn++;
                         }
                         break;
@@ -50,6 +56,7 @@ public class KeyboardStrategy implements InputStrategy{
             }
         });
     }
+
     private void highlightButton(JButton[][] buttons) {
 
         // Återställ alla borders
@@ -58,8 +65,7 @@ public class KeyboardStrategy implements InputStrategy{
             for (JButton jButton : button) {
 
                 jButton.setBorder(
-                        BorderFactory.createEmptyBorder()
-                );
+                        BorderFactory.createEmptyBorder());
             }
         }
 
@@ -67,8 +73,6 @@ public class KeyboardStrategy implements InputStrategy{
         buttons[selectedRow][selectedColumn].setBorder(
                 BorderFactory.createLineBorder(
                         java.awt.Color.WHITE,
-                        3
-                )
-        );
+                        3));
     }
 }

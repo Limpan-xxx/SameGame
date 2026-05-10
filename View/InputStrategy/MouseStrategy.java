@@ -5,7 +5,7 @@ import View.GamePanel;
 
 import javax.swing.*;
 
-public class MouseStrategy implements InputStrategy{
+public class MouseStrategy implements InputStrategy {
 
     @Override
     public void setupInput(GamePresenter gamePresenter, GamePanel gamePanel) {
