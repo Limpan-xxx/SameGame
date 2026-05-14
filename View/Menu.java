@@ -1,13 +1,14 @@
 package View;
-import Presentation.GamePresenter;
+import Controller.GameController;
 import java.awt.*;
 import javax.swing.*;
 
 public class Menu extends JPanel {
 
-    public Menu(GamePresenter gamePresenter) {
+    public Menu(GameController gameController) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+        JCheckBox DebugMode = new JCheckBox("Debug mode");
         JButton undo = new JButton("Undo");
         JButton redo = new JButton("Redo");
         JButton reset = new JButton("Reset");
@@ -15,6 +16,8 @@ public class Menu extends JPanel {
 
         Dimension buttonSize = new Dimension(120, 40);
 
+        DebugMode.setMaximumSize(buttonSize);
+        DebugMode.setFocusable(false);
         undo.setMaximumSize(buttonSize);
         undo.setFocusable(false);
         redo.setMaximumSize(buttonSize);
@@ -37,10 +40,14 @@ public class Menu extends JPanel {
 
         add(exit);
         add(Box.createVerticalGlue());
-        undo.addActionListener(e -> gamePresenter.undo());
-        redo.addActionListener(e -> gamePresenter.redo());
-        reset.addActionListener(e -> gamePresenter.reset());
-        exit.addActionListener(e -> gamePresenter.exitToMenu());
+
+        add(DebugMode);
+        add(Box.createVerticalStrut(20));
+
+        undo.addActionListener(e -> gameController.undo());
+        redo.addActionListener(e -> gameController.redo());
+        reset.addActionListener(e -> gameController.reset());
+        exit.addActionListener(e -> gameController.exitToMenu());
         undo.setAlignmentX(Component.CENTER_ALIGNMENT);
         redo.setAlignmentX(Component.CENTER_ALIGNMENT);
         reset.setAlignmentX(Component.CENTER_ALIGNMENT);

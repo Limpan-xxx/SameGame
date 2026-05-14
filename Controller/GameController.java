@@ -1,4 +1,4 @@
-package Presentation;
+package Controller;
 
 import Model.BoardModel;
 import Model.DebugPrinter;
@@ -8,12 +8,12 @@ import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-public class GamePresenter {
+public class GameController {
     BoardModel boardModel;
     Board board;
     ScoreboardModel scoreboardModel;
 
-    public GamePresenter(BoardModel boardModel, Board board, ScoreboardModel scoreboardModel) {
+    public GameController(BoardModel boardModel, Board board, ScoreboardModel scoreboardModel) {
         this.boardModel = boardModel;
         this.board = board;
         this.scoreboardModel = scoreboardModel;

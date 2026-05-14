@@ -2,7 +2,6 @@ package View;
 
 import Model.BoardModel;
 import Model.Observers.GameObserver;
-import Presentation.GamePresenter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +11,7 @@ public class GamePanel extends JPanel implements GameObserver {
     JButton[][] buttons;
     private BoardModel boardModel;
 
-    public GamePanel(BoardModel boardModel, GamePresenter gamePresenter) {
+    public GamePanel(BoardModel boardModel) {
         this.boardModel = boardModel;
         int rows = boardModel.getGridRows();
         int columns = boardModel.getGridColumns();

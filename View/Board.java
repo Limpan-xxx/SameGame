@@ -2,10 +2,10 @@ package View;
 
 import Model.BoardModel;
 import Model.ScoreboardModel;
-import Presentation.GamePresenter;
-import View.InputStrategy.InputStrategy;
-import View.InputStrategy.KeyboardStrategy;
-import View.InputStrategy.MouseStrategy;
+import Controller.GameController;
+import Controller.InputStrategy.InputStrategy;
+import Controller.InputStrategy.KeyboardStrategy;
+import Controller.InputStrategy.MouseStrategy;
 
 import java.awt.*;
 import javax.swing.*;
@@ -48,11 +48,11 @@ public class Board {
         title.setFont(new Font("SansSerif", Font.BOLD, 30));
         BoardModel boardModel = new BoardModel(BOARD_ROWS, BOARD_COLUMNS, numberOfColors);
         ScoreboardModel scoreboardModel = new ScoreboardModel(BOARD_ROWS * BOARD_COLUMNS);
-        GamePresenter gamePresenter = new GamePresenter(boardModel, this, scoreboardModel);
-        Menu menu = new Menu(gamePresenter);
+        GameController gameController = new GameController(boardModel, this, scoreboardModel);
+        Menu menu = new Menu(gameController);
         Scoreboard scoreboard = new Scoreboard(scoreboardModel);
         JPanel gamePanelWrapper = new JPanel(new GridBagLayout());
-        GamePanel gamepanel = new GamePanel(boardModel, gamePresenter);
+        GamePanel gamepanel = new GamePanel(boardModel);
         gamePanelWrapper.add(gamepanel);
 
         frame.add(title, BorderLayout.NORTH);
@@ -71,7 +71,7 @@ public class Board {
             inputStrategy = new MouseStrategy();
         }
 
-        inputStrategy.setupInput(gamePresenter, gamepanel);
+        inputStrategy.setupInput(gameController, gamepanel);
 
         frame.revalidate();
         frame.repaint();

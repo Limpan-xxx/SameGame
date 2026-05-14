@@ -1,6 +1,6 @@
-package View.InputStrategy;
+package Controller.InputStrategy;
 
-import Presentation.GamePresenter;
+import Controller.GameController;
 import View.GamePanel;
 
 import javax.swing.*;
@@ -12,7 +12,7 @@ public class KeyboardStrategy implements InputStrategy {
     private int selectedColumn = 0;
 
     @Override
-    public void setupInput(GamePresenter gamePresenter, GamePanel gamePanel) {
+    public void setupInput(GameController gameController, GamePanel gamePanel) {
         JButton[][] buttons = gamePanel.getButtons();
 
         for (JButton[] row : buttons) {
@@ -49,7 +49,7 @@ public class KeyboardStrategy implements InputStrategy {
                         }
                         break;
                     case KeyEvent.VK_ENTER:
-                        gamePresenter.tileClicked(selectedRow, selectedColumn);
+                        gameController.tileClicked(selectedRow, selectedColumn);
                         break;
                 }
                 highlightButton(buttons);
