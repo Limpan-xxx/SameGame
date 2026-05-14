@@ -94,4 +94,8 @@ public class Board {
         this.controllerModeOn = controllerModeOn;
     }
 
+    public boolean getControllerState(){
+        return this.controllerModeOn;
+    }
+
 }

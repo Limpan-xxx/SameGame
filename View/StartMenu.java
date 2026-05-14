@@ -51,13 +51,10 @@ public class StartMenu extends JPanel {
 
         content.add(Box.createVerticalStrut(100));
 
-        JToggleButton controller = new JToggleButton("Keyboard", false);
+        JCheckBox controller = new JCheckBox("Keyboard", false);
+        controller.setSelected(board.getControllerState());
         controller.setFocusable(false);
-        controller.setBackground(Color.red);
         controller.setAlignmentX(Component.CENTER_ALIGNMENT);
-        controller.setMaximumSize(new Dimension(200, 40));
-        controller.setPreferredSize(new Dimension(200, 40));
-        controller.setMinimumSize(new Dimension(200, 40));
         controller.addActionListener(e -> {board.inputToggleController(controller.isSelected());
                 });
         content.add(controller, BorderLayout.WEST);
