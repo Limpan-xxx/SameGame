@@ -17,7 +17,7 @@ public class GamePanel extends JPanel implements GameObserver {
         int columns = boardModel.getGridColumns();
         this.buttons = new JButton[rows][columns];
 
-        boardModel.addObserver(this);
+        boardModel.addGameObserver(this);
 
         setPreferredSize(new Dimension(rows * this.tileSize, columns * this.tileSize));
         setLayout(new GridLayout(rows, columns));

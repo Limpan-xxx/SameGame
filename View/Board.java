@@ -49,7 +49,7 @@ public class Board {
         BoardModel boardModel = new BoardModel(BOARD_ROWS, BOARD_COLUMNS, numberOfColors);
         ScoreboardModel scoreboardModel = new ScoreboardModel(BOARD_ROWS * BOARD_COLUMNS);
         GameController gameController = new GameController(boardModel, this, scoreboardModel);
-        Menu menu = new Menu(gameController);
+        Menu menu = new Menu(gameController, boardModel, scoreboardModel);
         Scoreboard scoreboard = new Scoreboard(scoreboardModel);
         JPanel gamePanelWrapper = new JPanel(new GridBagLayout());
         GamePanel gamepanel = new GamePanel(boardModel);

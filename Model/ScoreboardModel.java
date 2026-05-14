@@ -3,6 +3,7 @@ package Model;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import Model.Observers.DebugObserver;
 import Model.Observers.GameObserver;
 
 public class ScoreboardModel {
@@ -10,7 +11,8 @@ public class ScoreboardModel {
     int currentScore;
     int lastMoveScore;
     int remainingTiles;
-    private ArrayList<GameObserver> observers = new ArrayList<>();
+    private ArrayList<GameObserver> gameObservers = new ArrayList<>();
+    private ArrayList<DebugObserver> debugObservers = new ArrayList<>();
     private Stack<Integer> undoStackCurrentScore = new Stack<>();
     private Stack<Integer> redoStackCurrentScore = new Stack<>();
 
@@ -31,12 +33,26 @@ public class ScoreboardModel {
      * @param observer the observer of the game, Tile[][] board
      */
     public void addObserver(GameObserver observer) {
-        observers.add(observer);
+        gameObservers.add(observer);
     }
 
     private void notifyObservers() {
-        for (GameObserver observer : observers) {
+        for (GameObserver observer : gameObservers) {
             observer.boardChanged();
+        }
+    }
+
+    public void addDebugObserver(DebugObserver observer) {
+        debugObservers.add(observer);
+    }
+
+    public void removeDebugObserver(DebugObserver debugObserver) {
+        debugObservers.remove(debugObserver);
+    }
+
+    private void notifyDebugObservers() {
+        for (DebugObserver observer : debugObservers) {
+            observer.scoreUpdated(lastMoveScore, currentScore);
         }
     }
 
@@ -44,10 +60,7 @@ public class ScoreboardModel {
         if (numberOfRemovedTiles < 2) {
             return 0;
         }
-
-        int moveScore = (numberOfRemovedTiles - 2) * (numberOfRemovedTiles - 2);
-
-        return moveScore;
+        return (numberOfRemovedTiles - 2) * (numberOfRemovedTiles - 2);
     }
 
     public void updateAfterMove(int numberOfRemovedTiles) {
@@ -61,11 +74,7 @@ public class ScoreboardModel {
             remainingTiles = 0;
         }
 
-        DebugPrinter.printSectionStart("SCORE UPDATES");
-        DebugPrinter.printLine("Score increased by: " + lastMoveScore);
-        DebugPrinter.printLine("Current Score: " + currentScore);
-        DebugPrinter.printSectionEnd("SCORE UPDATES");
-
+        notifyDebugObservers();
         notifyObservers();
     }
 

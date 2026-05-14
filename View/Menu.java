@@ -1,11 +1,16 @@
 package View;
 import Controller.GameController;
+import Model.BoardModel;
+import Model.ScoreboardModel;
+
 import java.awt.*;
 import javax.swing.*;
 
 public class Menu extends JPanel {
 
-    public Menu(GameController gameController) {
+    private boolean debugState = false;
+
+    public Menu(GameController gameController, BoardModel boardModel, ScoreboardModel scoreboardModel) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
         JCheckBox DebugMode = new JCheckBox("Debug mode");
@@ -14,10 +19,26 @@ public class Menu extends JPanel {
         JButton reset = new JButton("Reset");
         JButton exit = new JButton("Exit");
 
+        DebugView debugView = new DebugView();
+
         Dimension buttonSize = new Dimension(120, 40);
 
         DebugMode.setMaximumSize(buttonSize);
         DebugMode.setFocusable(false);
+        DebugMode.addActionListener(e-> debugState = !debugState);
+
+        DebugMode.addActionListener(e -> {
+
+            if (DebugMode.isSelected()) {
+                boardModel.addDebugObserver(debugView);
+                scoreboardModel.addDebugObserver(debugView);
+            } else {
+                boardModel.removeDebugObserver(debugView);
+                scoreboardModel.removeDebugObserver(debugView);
+            }
+        });
+
+        add(DebugMode);
         undo.setMaximumSize(buttonSize);
         undo.setFocusable(false);
         redo.setMaximumSize(buttonSize);

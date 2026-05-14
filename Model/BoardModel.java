@@ -1,6 +1,8 @@
 package Model;
 
+import Model.Observers.DebugObserver;
 import Model.Observers.GameObserver;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -10,7 +12,8 @@ public class BoardModel {
     private final int gridColumns;
     private final int gridRows;
 
-    private ArrayList<GameObserver> observers = new ArrayList<>();
+    private final ArrayList<GameObserver> gameObservers = new ArrayList<>();
+    private final ArrayList<DebugObserver> debugObservers = new ArrayList<>();
     private Tile[][] originalBoard;
     private Stack<Tile[][]> undoStack = new Stack<>();
     private Stack<Tile[][]> redoStack = new Stack<>();
@@ -32,20 +35,67 @@ public class BoardModel {
 
     /**
      *
-     * @param observer the observer of the game, Tile[][] board
+     * @param gameObserver the gameObserver of the game, Tile[][] board
      */
-    public void addObserver(GameObserver observer) {
-        observers.add(observer);
+    public void addGameObserver(GameObserver gameObserver) {
+        gameObservers.add(gameObserver);
     }
 
     /**
-     * notifies observers that Tile[][] board has changed
+     * notifies gameObservers that Tile[][] board has changed
      */
-    private void notifyObservers() {
-        for (GameObserver observer : observers) {
+    private void notifyGameObservers() {
+        for (GameObserver observer : gameObservers) {
             observer.boardChanged();
         }
     }
+
+    /**
+     *
+     * @param debugObserver the debugObserver of the game, Tile[][] board
+     */
+    public void addDebugObserver(DebugObserver debugObserver) {
+        debugObservers.add(debugObserver);
+    }
+
+    public void removeDebugObserver(DebugObserver debugObserver) {
+        debugObservers.remove(debugObserver);
+    }
+
+
+    /**
+     * notifies debugObservers that Tile[][] board has changed
+     */
+    private void notifyDebugCurrentBoard() {
+        for (DebugObserver observer : debugObservers) {
+            observer.currentBoard(board);
+        }
+    }
+
+    public void notifyDebugTileClicked(int row, int column, int colorID){
+        for (DebugObserver observer : debugObservers) {
+            observer.tileClicked(row, column, colorID);
+        }
+    }
+
+    public void notifyDebugRemovedTile(ArrayList<Point> neighbors, Tile[][] board){
+        for (DebugObserver observer : debugObservers) {
+            observer.tilesRemoved(neighbors, board);
+        }
+    }
+
+    private void notifyDebugShiftedLeft(ArrayList<Point> XmovedToY){
+        for (DebugObserver observer : debugObservers) {
+            observer.Shiftedleft(XmovedToY);
+        }
+    }
+
+    private void notifyDebugGravityApplied(ArrayList<Integer> fallenTilesInColumn){
+        for (DebugObserver observer : debugObservers) {
+            observer.gravityApplied(fallenTilesInColumn);
+        }
+    }
+
 
     /**
      *
@@ -130,7 +180,8 @@ public class BoardModel {
      * neighbors
      */
     public void gravityFalls() {
-        DebugPrinter.printSectionStart("GRAVITY FALLS");
+        ArrayList<Integer> fallenTilesInColumn = new ArrayList<>();
+
         for (int i = 0; i < gridColumns; i++) {
             boolean columnShifted = false;
 
@@ -164,25 +215,14 @@ public class BoardModel {
                 rowIndex--;
             }
             if (columnShifted) {
-                DebugPrinter.printLine(
-                        "Tiles in column " + i + " shifted down");
+                fallenTilesInColumn.add(i);
             }
         }
-        DebugPrinter.printSectionEnd("GRAVITY FALLS");
-        DebugPrinter.printSectionStart("GAMEBOARD");
-        for (int i = 0; i < gridRows; i++) {
-            for (int j = 0; j < gridColumns; j++) {
-                DebugPrinter.printHorizontalLine(String.valueOf(board[i][j].getColorID()));
-            }
-            DebugPrinter.seperator();
-        }
-        DebugPrinter.printSectionEnd("GAMEBOARD");
-        // notifyObservers(); tror ej behövs för att det finns i slutet som är
-        // shiftLeft() som alltid körs i TileClicked()
+        notifyDebugGravityApplied(fallenTilesInColumn);
     }
 
     public void shiftLeft() {
-        DebugPrinter.printSectionStart("SHIFT LEFT");
+        ArrayList<Point> XmovedToY = new ArrayList<>(); // for console-view
         int targetColumn = 0;
 
         for (int currentColumn = 0; currentColumn < gridColumns; currentColumn++) {
@@ -190,7 +230,7 @@ public class BoardModel {
             if (!isColumnEmpty(currentColumn)) {
 
                 if (currentColumn != targetColumn) {
-                    DebugPrinter.printLine("Shifting column " + currentColumn + " to " + targetColumn);
+                    XmovedToY.add(new Point(currentColumn, targetColumn));
                     moveColumn(currentColumn, targetColumn);
                     clearColumn(currentColumn);
                 }
@@ -199,8 +239,9 @@ public class BoardModel {
             }
         }
 
-        notifyObservers();
-        DebugPrinter.printSectionEnd("SHIFT LEFT");
+        notifyGameObservers();
+        notifyDebugShiftedLeft(XmovedToY);
+        notifyDebugCurrentBoard();
     }
 
     private boolean isColumnEmpty(int column) {
@@ -284,7 +325,7 @@ public class BoardModel {
         if (!undoStack.isEmpty()) {
             redoStack.push(copyBoard(board));
             board = undoStack.pop();
-            notifyObservers();
+            notifyGameObservers();
         }
     }
 
@@ -292,7 +333,7 @@ public class BoardModel {
         if (!redoStack.isEmpty()) {
             undoStack.push(copyBoard(board));
             board = redoStack.pop();
-            notifyObservers();
+            notifyGameObservers();
         }
     }
 
@@ -300,7 +341,7 @@ public class BoardModel {
         undoStack.clear();
         redoStack.clear();
         board = copyBoard(originalBoard);
-        notifyObservers();
+        notifyGameObservers();
     }
 
     private Tile[][] copyBoard(Tile[][] source) {

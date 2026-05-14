@@ -1,9 +1,9 @@
 package Controller;
 
 import Model.BoardModel;
-import Model.DebugPrinter;
 import Model.ScoreboardModel;
 import View.Board;
+
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -25,13 +25,8 @@ public class GameController {
      * @param column index of the Tile
      */
     public void tileClicked(int row, int column) {
-        DebugPrinter.printSectionStart("DEBUG START");
 
-        DebugPrinter.printSectionStart("CLICK EVENT");
-        DebugPrinter.printLine("Clicked tile: row=" + row +
-                " column=" + column +
-                " color=" + boardModel.board[row][column].getColorID());
-        DebugPrinter.printSectionEnd("CLICK EVENT");
+        boardModel.notifyDebugTileClicked(row, column, boardModel.board[row][column].getColorID());
 
         boardModel.saveState();
         scoreboardModel.saveState();
@@ -40,13 +35,11 @@ public class GameController {
         if (neighbors.size() < 2) {
             return;
         }
-        DebugPrinter.printSectionStart("REMOVED TILES");
+
+        boardModel.notifyDebugRemovedTile(neighbors, boardModel.board);
         for (Point p : neighbors) {
-            DebugPrinter.printLine("Removed tile: row=" + p.x + " column=" + p.y + " color="
-                    + boardModel.board[p.x][p.y].getColorID());
             boardModel.removeTile(p.x, p.y);
         }
-        DebugPrinter.printSectionEnd("REMOVED TILES");
 
         boardModel.gravityFalls();
         boardModel.shiftLeft();
@@ -60,7 +53,6 @@ public class GameController {
                         JOptionPane.PLAIN_MESSAGE);
             }
         }
-        DebugPrinter.printSectionStart("DEBUG END");
     }
 
     public void undo() {
