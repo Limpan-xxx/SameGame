@@ -54,6 +54,7 @@ public class Board {
         JPanel gamePanelWrapper = new JPanel(new GridBagLayout());
         GamePanel gamepanel = new GamePanel(boardModel);
         gamePanelWrapper.add(gamepanel);
+        
 
         frame.add(title, BorderLayout.NORTH);
         frame.add(menu, BorderLayout.EAST);

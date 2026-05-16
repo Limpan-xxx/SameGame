@@ -148,6 +148,9 @@ public class BoardModel {
         }
     }
 
+    /**
+     * @return if the board has any moves available
+     */
     public boolean hasMoves() {
         for (int row = 0; row < gridRows; row++) {
             for (int column = 0; column < gridColumns; column++) {
@@ -171,6 +174,9 @@ public class BoardModel {
         return false;
     }
 
+    /**
+     * @return if the player has wone the game
+     */
     public boolean win() {
         return board[gridRows - 1][0].getColorID() == 0;
     }
@@ -221,6 +227,9 @@ public class BoardModel {
         notifyDebugGravityApplied(fallenTilesInColumn);
     }
 
+    /**
+     * shifts the tiles left if there is a empty space to the left of the rightmost column of tiles
+     */
     public void shiftLeft() {
         ArrayList<Point> XmovedToY = new ArrayList<>(); // for console-view
         int targetColumn = 0;
@@ -244,6 +253,11 @@ public class BoardModel {
         notifyDebugCurrentBoard();
     }
 
+    /**
+     *
+     * @param column the column that it checks if it is empty
+     * @return the value of the boolean
+     */
     private boolean isColumnEmpty(int column) {
         for (int row = 0; row < gridRows; row++) {
             if (board[row][column].getColorID() != 0) {
@@ -254,6 +268,11 @@ public class BoardModel {
         return true;
     }
 
+    /**
+     * moves the column
+     * @param fromColumn column to be moved
+     * @param toColumn the columns target
+     */
     private void moveColumn(int fromColumn, int toColumn) {
         for (int row = 0; row < gridRows; row++) {
             board[row][toColumn].setColorID(board[row][fromColumn].getColorID());
@@ -279,7 +298,6 @@ public class BoardModel {
 
     /**
      * Removes tile from board
-     * 
      * @param row    index to tile to remove
      * @param column index to tile to remove
      */
@@ -316,11 +334,17 @@ public class BoardModel {
         return gridRows;
     }
 
+    /**
+     * saves the state by copying the board and pushing it to the undoStack
+     */
     public void saveState() {
         undoStack.push(copyBoard(board));
         redoStack.clear();
     }
 
+    /**
+     * makes the current board the previous state by popping from the undoStack,
+     */
     public void undo() {
         if (!undoStack.isEmpty()) {
             redoStack.push(copyBoard(board));
@@ -329,6 +353,9 @@ public class BoardModel {
         }
     }
 
+    /**
+     * pops the redoStack to the current board
+     */
     public void redo() {
         if (!redoStack.isEmpty()) {
             undoStack.push(copyBoard(board));
@@ -337,6 +364,9 @@ public class BoardModel {
         }
     }
 
+    /**
+     * fully resets the board to its original state
+     */
     public void reset() {
         undoStack.clear();
         redoStack.clear();
@@ -344,6 +374,11 @@ public class BoardModel {
         notifyGameObservers();
     }
 
+    /**
+     * copies the current source board
+     * @param source the board which is to be copied
+     * @return copy of the board
+     */
     private Tile[][] copyBoard(Tile[][] source) {
         Tile[][] copy = new Tile[gridRows][gridColumns];
         for (int i = 0; i < gridRows; i++) {
