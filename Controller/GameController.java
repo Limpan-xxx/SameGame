@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.BoardModel;
-import Model.HighScore;
 import Model.HighScoreManager;
 import Model.ScoreboardModel;
 import Model.Sounds.GameEvent;
@@ -20,6 +19,14 @@ public class GameController {
     SoundManager soundManager;
     HighScoreManager highScoreManager;
 
+    /**
+     * Constructs a GameController
+     * @param boardModel the model containing the game boards state and logic
+     * @param board the main class
+     * @param scoreboardModel the model containing the current score and scoring logic.
+     * @param soundManager responsible for playing game sound effects.
+     * @param highScoreManager the class that handles the ser file with scores
+     */
     public GameController(BoardModel boardModel, Board board, ScoreboardModel scoreboardModel,
             SoundManager soundManager, HighScoreManager highScoreManager) {
         this.boardModel = boardModel;
@@ -77,32 +84,51 @@ public class GameController {
         }
     }
 
+    /**
+     * updates the best move
+     */
     private void updateBestMove() {
         this.bestMove = boardModel.getBestClusterToRemove();
     }
 
+    /**
+     * getter for the best move
+     * @return the best move as a list with Points
+     */
     public ArrayList<Point> getBestMove() {
         return bestMove;
     }
 
+    /**
+     * the undo method handles so that all redo calls are in sync
+     */
     public void undo() {
         boardModel.undo();
         scoreboardModel.undo();
         updateBestMove();
     }
 
+    /**
+     * the redo method handles so that all redo calls are in sync
+     */
     public void redo() {
         boardModel.redo();
         scoreboardModel.redo();
         updateBestMove();
     }
 
+    /**
+     * the reset method handles so that all reset calls are in sync
+     */
     public void reset() {
         boardModel.reset();
         scoreboardModel.reset(board.BOARD_COLUMNS * board.BOARD_ROWS);
         updateBestMove();
     }
 
+    /**
+     * calls the board to exit to the startMenu
+     */
     public void exitToMenu() {
         board.returnToStartMenu();
     }

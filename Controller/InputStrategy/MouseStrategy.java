@@ -7,6 +7,11 @@ import javax.swing.*;
 
 public class MouseStrategy implements InputStrategy {
 
+    /**
+     * the setup method for the MouseStrategy
+     * @param gameController references to the class GameController
+     * @param gamePanel references to the class GameController
+     */
     @Override
     public void setupInput(GameController gameController, GamePanel gamePanel) {
         JButton[][] buttons = gamePanel.getButtons();

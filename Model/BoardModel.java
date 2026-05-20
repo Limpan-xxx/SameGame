@@ -18,6 +18,13 @@ public class BoardModel {
     private Stack<Tile[][]> undoStack = new Stack<>();
     private Stack<Tile[][]> redoStack = new Stack<>();
 
+    /**
+     * the constructor of the boardModel
+     * initialized the gameboard
+     * @param gridRows the number of desired rows on the board
+     * @param gridColumns the number of desired columns on the board
+     * @param numberOfColors the number of desired columns on the board, for difficulty
+     */
     public BoardModel(int gridRows, int gridColumns, int numberOfColors) {
         this.board = new Tile[gridRows][gridColumns];
         this.gridRows = gridRows;
@@ -51,13 +58,17 @@ public class BoardModel {
     }
 
     /**
-     *
+     * adds an observer to the list of observers
      * @param debugObserver the debugObserver of the game, Tile[][] board
      */
     public void addDebugObserver(DebugObserver debugObserver) {
         debugObservers.add(debugObserver);
     }
 
+    /**
+     * removes an observer from the list of observers
+     * @param debugObserver the debugObserver of the game
+     */
     public void removeDebugObserver(DebugObserver debugObserver) {
         debugObservers.remove(debugObserver);
     }

@@ -11,6 +11,11 @@ public class KeyboardStrategy implements InputStrategy {
     private int selectedRow = 0;
     private int selectedColumn = 0;
 
+    /**
+     * the setup method for the KeyboardStrategy
+     * @param gameController references to the class GameController
+     * @param gamePanel references to the class GameController
+     */
     @Override
     public void setupInput(GameController gameController, GamePanel gamePanel) {
         JButton[][] buttons = gamePanel.getButtons();
