@@ -6,6 +6,7 @@ import Controller.GameController;
 import Controller.InputStrategy.InputStrategy;
 import Controller.InputStrategy.KeyboardStrategy;
 import Controller.InputStrategy.MouseStrategy;
+import Model.Sounds.SoundManager;
 
 import java.awt.*;
 import javax.swing.*;
@@ -48,7 +49,8 @@ public class Board {
         title.setFont(new Font("SansSerif", Font.BOLD, 30));
         BoardModel boardModel = new BoardModel(BOARD_ROWS, BOARD_COLUMNS, numberOfColors);
         ScoreboardModel scoreboardModel = new ScoreboardModel(BOARD_ROWS * BOARD_COLUMNS);
-        GameController gameController = new GameController(boardModel, this, scoreboardModel);
+        SoundManager soundManager = new SoundManager();
+        GameController gameController = new GameController(boardModel, this, scoreboardModel, soundManager);
         Menu menu = new Menu(gameController, boardModel, scoreboardModel);
         Scoreboard scoreboard = new Scoreboard(scoreboardModel);
         JPanel gamePanelWrapper = new JPanel(new GridBagLayout());

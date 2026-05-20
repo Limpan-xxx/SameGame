@@ -11,7 +11,7 @@ public class ScoreboardModel {
     int currentScore;
     int lastMoveScore;
     int remainingTiles;
-    private ArrayList<GameObserver> gameObservers = new ArrayList<>();
+    private ArrayList<GameObserver> scoreObservers = new ArrayList<>();
     private ArrayList<DebugObserver> debugObservers = new ArrayList<>();
     private Stack<Integer> undoStackCurrentScore = new Stack<>();
     private Stack<Integer> redoStackCurrentScore = new Stack<>();
@@ -33,11 +33,11 @@ public class ScoreboardModel {
      * @param observer the observer of the game, Tile[][] board
      */
     public void addObserver(GameObserver observer) {
-        gameObservers.add(observer);
+        scoreObservers.add(observer);
     }
 
     private void notifyObservers() {
-        for (GameObserver observer : gameObservers) {
+        for (GameObserver observer : scoreObservers) {
             observer.boardChanged();
         }
     }
