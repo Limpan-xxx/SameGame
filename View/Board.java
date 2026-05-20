@@ -49,12 +49,11 @@ public class Board {
         BoardModel boardModel = new BoardModel(BOARD_ROWS, BOARD_COLUMNS, numberOfColors);
         ScoreboardModel scoreboardModel = new ScoreboardModel(BOARD_ROWS * BOARD_COLUMNS);
         GameController gameController = new GameController(boardModel, this, scoreboardModel);
-        Menu menu = new Menu(gameController, boardModel, scoreboardModel);
         Scoreboard scoreboard = new Scoreboard(scoreboardModel);
         JPanel gamePanelWrapper = new JPanel(new GridBagLayout());
         GamePanel gamepanel = new GamePanel(boardModel);
+        Menu menu = new Menu(gameController, boardModel, scoreboardModel, gamepanel);
         gamePanelWrapper.add(gamepanel);
-        
 
         frame.add(title, BorderLayout.NORTH);
         frame.add(menu, BorderLayout.EAST);
@@ -77,6 +76,13 @@ public class Board {
         frame.revalidate();
         frame.repaint();
         gamepanel.requestFocusInWindow();
+
+        System.err.println("--------------------------------------");
+        for (Point point : gameController.getBestMove()) {
+            System.err.println(point);
+        }
+        System.err.println("--------------------------------------");
+
     }
 
     public void returnToStartMenu() {
@@ -95,7 +101,7 @@ public class Board {
         this.controllerModeOn = controllerModeOn;
     }
 
-    public boolean getControllerState(){
+    public boolean getControllerState() {
         return this.controllerModeOn;
     }
 

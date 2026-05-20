@@ -12,11 +12,13 @@ public class GameController {
     BoardModel boardModel;
     Board board;
     ScoreboardModel scoreboardModel;
+    private ArrayList<Point> bestMove;
 
     public GameController(BoardModel boardModel, Board board, ScoreboardModel scoreboardModel) {
         this.boardModel = boardModel;
         this.board = board;
         this.scoreboardModel = scoreboardModel;
+        this.bestMove = boardModel.getBestClusterToRemove();
     }
 
     /**
@@ -44,6 +46,9 @@ public class GameController {
         boardModel.gravityFalls();
         boardModel.shiftLeft();
         scoreboardModel.updateAfterMove(neighbors.size());
+
+        updateBestMove();
+
         if (!boardModel.hasMoves()) {
 
             if (boardModel.win()) {
@@ -55,19 +60,30 @@ public class GameController {
         }
     }
 
+    private void updateBestMove() {
+        this.bestMove = boardModel.getBestClusterToRemove();
+    }
+
+    public ArrayList<Point> getBestMove() {
+        return bestMove;
+    }
+
     public void undo() {
         boardModel.undo();
         scoreboardModel.undo();
+        updateBestMove();
     }
 
     public void redo() {
         boardModel.redo();
         scoreboardModel.redo();
+        updateBestMove();
     }
 
     public void reset() {
         boardModel.reset();
         scoreboardModel.reset(board.BOARD_COLUMNS * board.BOARD_ROWS);
+        updateBestMove();
     }
 
     public void exitToMenu() {

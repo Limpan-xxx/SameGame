@@ -62,7 +62,6 @@ public class BoardModel {
         debugObservers.remove(debugObserver);
     }
 
-
     /**
      * notifies debugObservers that Tile[][] board has changed
      */
@@ -72,30 +71,29 @@ public class BoardModel {
         }
     }
 
-    public void notifyDebugTileClicked(int row, int column, int colorID){
+    public void notifyDebugTileClicked(int row, int column, int colorID) {
         for (DebugObserver observer : debugObservers) {
             observer.tileClicked(row, column, colorID);
         }
     }
 
-    public void notifyDebugRemovedTile(ArrayList<Point> neighbors, Tile[][] board){
+    public void notifyDebugRemovedTile(ArrayList<Point> neighbors, Tile[][] board) {
         for (DebugObserver observer : debugObservers) {
             observer.tilesRemoved(neighbors, board);
         }
     }
 
-    private void notifyDebugShiftedLeft(ArrayList<Point> XmovedToY){
+    private void notifyDebugShiftedLeft(ArrayList<Point> XmovedToY) {
         for (DebugObserver observer : debugObservers) {
             observer.Shiftedleft(XmovedToY);
         }
     }
 
-    private void notifyDebugGravityApplied(ArrayList<Integer> fallenTilesInColumn){
+    private void notifyDebugGravityApplied(ArrayList<Integer> fallenTilesInColumn) {
         for (DebugObserver observer : debugObservers) {
             observer.gravityApplied(fallenTilesInColumn);
         }
     }
-
 
     /**
      *
@@ -146,6 +144,37 @@ public class BoardModel {
                 && this.board[row][column + 1].getColorID() == colorID) {
             searchConnected(row, column + 1, connectedCoordinates);
         }
+    }
+
+    public ArrayList<Point> getBestClusterToRemove() {
+        ArrayList<Point> bestCluster = new ArrayList<>();
+
+        boolean[][] visited = new boolean[board.length][board[0].length];
+
+        for (int row = 0; row < board.length; row++) {
+            for (int column = 0; column < board[row].length; column++) {
+
+                // Hoppa över tomma tiles / redan kontrollerade tiles
+                if (!isTile(row, column) || visited[row][column]) {
+                    continue;
+                }
+
+                // Hitta hela clustret för denna tile
+                ArrayList<Point> cluster = searchConnected(row, column);
+
+                // Markera alla tiles i clustret som besökta
+                for (Point p : cluster) {
+                    visited[p.x][p.y] = true;
+                }
+
+                // Bara clusters med minst 2 tiles kan tas bort
+                if (cluster.size() >= 2 && cluster.size() > bestCluster.size()) {
+                    bestCluster = cluster;
+                }
+            }
+        }
+
+        return bestCluster;
     }
 
     /**
@@ -228,7 +257,8 @@ public class BoardModel {
     }
 
     /**
-     * shifts the tiles left if there is a empty space to the left of the rightmost column of tiles
+     * shifts the tiles left if there is a empty space to the left of the rightmost
+     * column of tiles
      */
     public void shiftLeft() {
         ArrayList<Point> XmovedToY = new ArrayList<>(); // for console-view
@@ -270,8 +300,9 @@ public class BoardModel {
 
     /**
      * moves the column
+     * 
      * @param fromColumn column to be moved
-     * @param toColumn the columns target
+     * @param toColumn   the columns target
      */
     private void moveColumn(int fromColumn, int toColumn) {
         for (int row = 0; row < gridRows; row++) {
@@ -298,6 +329,7 @@ public class BoardModel {
 
     /**
      * Removes tile from board
+     * 
      * @param row    index to tile to remove
      * @param column index to tile to remove
      */
@@ -376,6 +408,7 @@ public class BoardModel {
 
     /**
      * copies the current source board
+     * 
      * @param source the board which is to be copied
      * @return copy of the board
      */
