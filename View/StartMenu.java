@@ -1,5 +1,8 @@
 package View;
 
+import Model.HighScoreManager;
+import Model.HighScore;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -12,7 +15,10 @@ public class StartMenu extends JPanel {
     private static final Color SELECTED_COLOR = new Color(70, 130, 180);
     private static final Color DEFAULT_COLOR   = UIManager.getColor("Button.background");
 
-    public StartMenu(Board board) {
+    HighScoreManager highScoreManager;
+
+    public StartMenu(Board board, HighScoreManager highScoreManager) {
+        this.highScoreManager = highScoreManager;
 
         setLayout(new GridBagLayout()); // Centrerar content-panelen
 
@@ -51,6 +57,16 @@ public class StartMenu extends JPanel {
 
         content.add(Box.createVerticalStrut(100));
 
+        JButton highScoreButton = new JButton("High Scores");
+        highScoreButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        highScoreButton.setMaximumSize(new Dimension(200, 40));
+        highScoreButton.setPreferredSize(new Dimension(200, 40));
+        highScoreButton.setMinimumSize(new Dimension(200, 40));
+        highScoreButton.addActionListener(e -> showHighScores());
+        content.add(highScoreButton);
+
+        content.add(Box.createVerticalStrut(100));
+
         JCheckBox controller = new JCheckBox("Keyboard", false);
         controller.setSelected(board.getControllerState());
         controller.setFocusable(false);
@@ -60,6 +76,22 @@ public class StartMenu extends JPanel {
         content.add(controller, BorderLayout.WEST);
 
         add(content); // GridBagLayout centrerar automatiskt
+    }
+
+    private void showHighScores() {
+        if (highScoreManager.getHighScores().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No high scores yet!", "High Scores", JOptionPane.PLAIN_MESSAGE);
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        int rank = 1;
+        for (HighScore hs : highScoreManager.getHighScores()) {
+            sb.append(rank).append(". ").append(hs.getPlayerName())
+                    .append(" — ").append(hs.getScore()).append("\n");
+            rank++;
+        }
+        JOptionPane.showMessageDialog(null, sb.toString(), "High Scores", JOptionPane.PLAIN_MESSAGE);
     }
 
     private JButton createButton(String level) {

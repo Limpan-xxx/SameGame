@@ -1,6 +1,7 @@
 package View;
 
 import Model.BoardModel;
+import Model.HighScoreManager;
 import Model.ScoreboardModel;
 import Controller.GameController;
 import Controller.InputStrategy.InputStrategy;
@@ -16,14 +17,16 @@ public class Board {
     public final int BOARD_ROWS = 8;
     public final int BOARD_COLUMNS = 8;
     private boolean controllerModeOn;
+    HighScoreManager highScoreManager;
 
     public Board() {
         frame = new JFrame("SameGame");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
+        this.highScoreManager = new HighScoreManager();
 
-        StartMenu startMenu = new StartMenu(this);
+        StartMenu startMenu = new StartMenu(this, highScoreManager);
         frame.add(startMenu);
         frame.setVisible(true);
     }
@@ -50,7 +53,7 @@ public class Board {
         BoardModel boardModel = new BoardModel(BOARD_ROWS, BOARD_COLUMNS, numberOfColors);
         ScoreboardModel scoreboardModel = new ScoreboardModel(BOARD_ROWS * BOARD_COLUMNS);
         SoundManager soundManager = new SoundManager();
-        GameController gameController = new GameController(boardModel, this, scoreboardModel, soundManager);
+        GameController gameController = new GameController(boardModel, this, scoreboardModel, soundManager, highScoreManager);
         Scoreboard scoreboard = new Scoreboard(scoreboardModel);
         JPanel gamePanelWrapper = new JPanel(new GridBagLayout());
         GamePanel gamepanel = new GamePanel(boardModel);
@@ -82,7 +85,7 @@ public class Board {
 
     public void returnToStartMenu() {
         frame.getContentPane().removeAll();
-        StartMenu startMenu = new StartMenu(this);
+        StartMenu startMenu = new StartMenu(this,highScoreManager);
         frame.add(startMenu);
         frame.revalidate();
         frame.repaint();

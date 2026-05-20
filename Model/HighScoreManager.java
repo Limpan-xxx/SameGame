@@ -18,12 +18,10 @@ public class HighScoreManager implements Serializable {
     public void addScore(String playerName, int score) {
         highScores.add(new HighScore(playerName, score));
 
-        // Sort highest to lowest
         Collections.sort(highScores, (a, b) -> b.getScore() - a.getScore());
 
-        // Keep only the top scores
         if (highScores.size() > MAX_SCORES) {
-            highScores = highScores.subList(0, MAX_SCORES);
+            highScores = new ArrayList<>(highScores.subList(0, MAX_SCORES));
         }
 
         saveHighScores();
@@ -45,7 +43,7 @@ public class HighScoreManager implements Serializable {
     @SuppressWarnings("unchecked")
     private List<HighScore> loadHighScores() {
         File file = new File(FILE_PATH);
-        if (!file.exists()) return new ArrayList<>(); // first run, no file yet
+        if (!file.exists()) return new ArrayList<>();
 
         try (ObjectInputStream ois = new ObjectInputStream(
                 new FileInputStream(FILE_PATH))) {

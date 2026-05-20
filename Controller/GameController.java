@@ -18,14 +18,16 @@ public class GameController {
     ScoreboardModel scoreboardModel;
     private ArrayList<Point> bestMove;
     SoundManager soundManager;
+    HighScoreManager highScoreManager;
 
     public GameController(BoardModel boardModel, Board board, ScoreboardModel scoreboardModel,
-            SoundManager soundManager) {
+            SoundManager soundManager, HighScoreManager highScoreManager) {
         this.boardModel = boardModel;
         this.board = board;
         this.scoreboardModel = scoreboardModel;
         this.bestMove = boardModel.getBestClusterToRemove();
         this.soundManager = soundManager;
+        this.highScoreManager = highScoreManager;
     }
 
     /**
@@ -62,11 +64,10 @@ public class GameController {
 
             if (boardModel.win()) {
                 soundManager.notifySound(GameEvent.WIN);
-                JOptionPane.showMessageDialog(board.getFrame(), " You Won! 🎉", "Game Over", JOptionPane.PLAIN_MESSAGE);
-                HighScoreManager highScoreManager = new HighScoreManager();
-                highScoreManager.addScore("NAME", scoreboardModel.getCurrentScore());
-                for (HighScore G : highScoreManager.getHighScores()) {
-                    System.out.println(G);
+
+                String name = JOptionPane.showInputDialog(board.getFrame(), "You Won! 🎉 Enter your name:");
+                if (name != null && !name.isBlank()) {
+                    highScoreManager.addScore(name, scoreboardModel.getCurrentScore());
                 }
             } else {
                 soundManager.notifySound(GameEvent.LOSE);
