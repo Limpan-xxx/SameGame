@@ -51,12 +51,11 @@ public class Board {
         ScoreboardModel scoreboardModel = new ScoreboardModel(BOARD_ROWS * BOARD_COLUMNS);
         SoundManager soundManager = new SoundManager();
         GameController gameController = new GameController(boardModel, this, scoreboardModel, soundManager);
-        Menu menu = new Menu(gameController, boardModel, scoreboardModel);
         Scoreboard scoreboard = new Scoreboard(scoreboardModel);
         JPanel gamePanelWrapper = new JPanel(new GridBagLayout());
         GamePanel gamepanel = new GamePanel(boardModel);
+        Menu menu = new Menu(gameController, boardModel, scoreboardModel, gamepanel);
         gamePanelWrapper.add(gamepanel);
-        
 
         frame.add(title, BorderLayout.NORTH);
         frame.add(menu, BorderLayout.EAST);
@@ -97,7 +96,7 @@ public class Board {
         this.controllerModeOn = controllerModeOn;
     }
 
-    public boolean getControllerState(){
+    public boolean getControllerState() {
         return this.controllerModeOn;
     }
 

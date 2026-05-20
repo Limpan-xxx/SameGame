@@ -1,4 +1,5 @@
 package View;
+
 import Controller.GameController;
 import Model.BoardModel;
 import Model.ScoreboardModel;
@@ -10,10 +11,12 @@ public class Menu extends JPanel {
 
     private boolean debugState = false;
 
-    public Menu(GameController gameController, BoardModel boardModel, ScoreboardModel scoreboardModel) {
+    public Menu(GameController gameController, BoardModel boardModel, ScoreboardModel scoreboardModel,
+            GamePanel gamePanel) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
         JCheckBox DebugMode = new JCheckBox("Debug mode");
+        JCheckBox bestMoveMode = new JCheckBox("Show best move");
         JButton undo = new JButton("Undo");
         JButton redo = new JButton("Redo");
         JButton reset = new JButton("Reset");
@@ -25,7 +28,7 @@ public class Menu extends JPanel {
 
         DebugMode.setMaximumSize(buttonSize);
         DebugMode.setFocusable(false);
-        DebugMode.addActionListener(e-> debugState = !debugState);
+        DebugMode.addActionListener(e -> debugState = !debugState);
 
         DebugMode.addActionListener(e -> {
 
@@ -38,7 +41,16 @@ public class Menu extends JPanel {
             }
         });
 
+        bestMoveMode.setMaximumSize(buttonSize);
+        bestMoveMode.setFocusable(false);
+        bestMoveMode.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        bestMoveMode.addActionListener(e -> {
+            gamePanel.setHighlightBestMove(bestMoveMode.isSelected());
+        });
+
         add(DebugMode);
+        add(bestMoveMode);
         undo.setMaximumSize(buttonSize);
         undo.setFocusable(false);
         redo.setMaximumSize(buttonSize);
@@ -73,6 +85,6 @@ public class Menu extends JPanel {
         redo.setAlignmentX(Component.CENTER_ALIGNMENT);
         reset.setAlignmentX(Component.CENTER_ALIGNMENT);
         exit.setAlignmentX(Component.CENTER_ALIGNMENT);
-        
+
     }
 }
