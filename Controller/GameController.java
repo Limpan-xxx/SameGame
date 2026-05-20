@@ -1,6 +1,8 @@
 package Controller;
 
 import Model.BoardModel;
+import Model.HighScore;
+import Model.HighScoreManager;
 import Model.ScoreboardModel;
 import Model.Sounds.GameEvent;
 import Model.Sounds.SoundManager;
@@ -55,6 +57,11 @@ public class GameController {
             if (boardModel.win()) {
                 soundManager.notifySound(GameEvent.WIN);
                 JOptionPane.showMessageDialog(board.getFrame(), " You Won! 🎉", "Game Over", JOptionPane.PLAIN_MESSAGE);
+                HighScoreManager highScoreManager = new HighScoreManager();
+                highScoreManager.addScore("NAME", scoreboardModel.getCurrentScore());
+                for (HighScore G : highScoreManager.getHighScores()) {
+                    System.out.println(G);
+                }
             } else {
                 soundManager.notifySound(GameEvent.LOSE);
                 JOptionPane.showMessageDialog(board.getFrame(), " YOU LOST! 😢", "Game Over", JOptionPane.PLAIN_MESSAGE);
