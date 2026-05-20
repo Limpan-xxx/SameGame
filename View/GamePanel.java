@@ -33,8 +33,14 @@ public class GamePanel extends JPanel implements GameObserver {
         }
     }
 
-    public void fillTileColor(JButton Tile, int x, int y) {
-        Tile.setBackground(TileColor.IDtoColor(boardModel.getBoard()[x][y].getColorID()));
+    /**
+     * fills tiles with color from BoardModel
+     * @param Tile JButton with background
+     * @param row index of the JButton tile
+     * @param column index of the JButton tile
+     */
+    public void fillTileColor(JButton Tile, int row, int column) {
+        Tile.setBackground(TileColor.IDtoColor(boardModel.getBoard()[row][column].getColorID()));
     }
 
     /**
@@ -51,11 +57,18 @@ public class GamePanel extends JPanel implements GameObserver {
         }
     }
 
+    /**
+     * GameObserver calls this function
+     */
     @Override
     public void boardChanged() {
         updatePanel();
     }
 
+    /**
+     *
+     * @return the 2D array with buttons
+     */
     public JButton[][] getButtons(){
         return buttons;
     }
