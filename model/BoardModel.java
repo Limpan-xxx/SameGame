@@ -82,24 +82,40 @@ public class BoardModel {
         }
     }
 
+    /**
+     * notifies debugObservers which tile has been clicked
+     */
     public void notifyDebugTileClicked(int row, int column, int colorID) {
         for (DebugObserver observer : debugObservers) {
             observer.tileClicked(row, column, colorID);
         }
     }
 
+    /**
+     * notifies debugObservers which tiles has been removed
+     * @param neighbors the index to the tiles that has been removed
+     * @param board the gameModel board
+     */
     public void notifyDebugRemovedTile(ArrayList<Point> neighbors, Tile[][] board) {
         for (DebugObserver observer : debugObservers) {
             observer.tilesRemoved(neighbors, board);
         }
     }
 
+    /**
+     * notifies where the columns have moved to
+     * @param XmovedToY the list with a point where the point represents: x=startingColumn, y=endColumn
+     */
     private void notifyDebugShiftedLeft(ArrayList<Point> XmovedToY) {
         for (DebugObserver observer : debugObservers) {
             observer.Shiftedleft(XmovedToY);
         }
     }
 
+    /**
+     * notifies what column has fallen down
+     * @param fallenTilesInColumn list with indexes referring to the column
+     */
     private void notifyDebugGravityApplied(ArrayList<Integer> fallenTilesInColumn) {
         for (DebugObserver observer : debugObservers) {
             observer.gravityApplied(fallenTilesInColumn);
@@ -119,11 +135,10 @@ public class BoardModel {
     }
 
     /**
-     *
+     * recursive method that searches for neighbors to the current tile
      * @param row                  index to tile
      * @param column               index to tile
-     * @param connectedCoordinates ArrayList filled with index to connected Tiles,
-     *                             recursive
+     * @param connectedCoordinates ArrayList filled with index to connected Tiles, recursive
      */
     private void searchConnected(int row, int column, ArrayList<Point> connectedCoordinates) {
         Point currentPoint = new Point(row, column);
@@ -321,6 +336,10 @@ public class BoardModel {
         }
     }
 
+    /**
+     * clears the column
+     * @param column the one to be cleared
+     */
     private void clearColumn(int column) {
         for (int row = 0; row < gridRows; row++) {
             board[row][column].setColorID(0);

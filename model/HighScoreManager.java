@@ -15,6 +15,11 @@ public class HighScoreManager implements Serializable {
         this.highScores = loadHighScores();
     }
 
+    /**
+     *  adds a score as a score and possibly adds it to the list of highscore if it is high enough
+     * @param playerName the name of the player, fills in it themselves
+     * @param score the score of the current game at win
+     */
     public void addScore(String playerName, int score) {
         highScores.add(new HighScore(playerName, score));
 
@@ -27,10 +32,17 @@ public class HighScoreManager implements Serializable {
         saveHighScores();
     }
 
+    /**
+     * other classes can't modify the list, throws error
+     * @return the list of highscores
+     */
     public List<HighScore> getHighScores() {
         return Collections.unmodifiableList(highScores);
     }
 
+    /**
+     * saves the highscore through serialization
+     */
     private void saveHighScores() {
         try (ObjectOutputStream oos = new ObjectOutputStream(
                 new FileOutputStream(FILE_PATH))) {
@@ -40,6 +52,10 @@ public class HighScoreManager implements Serializable {
         }
     }
 
+    /**
+     * loads the highscore, always done at new HighscoreMangager()
+     * @return list of HighScores, cast as List
+     */
     @SuppressWarnings("unchecked")
     private List<HighScore> loadHighScores() {
         File file = new File(FILE_PATH);
