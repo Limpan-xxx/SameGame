@@ -13,6 +13,10 @@ public class Scoreboard extends JPanel implements GameObserver {
     private JLabel remainingTilesLabel;
     private ScoreboardModel scoreboard;
 
+    /**
+     * constructor for the scoreboard UI
+     * @param scoreboard the scoreboardModel
+     */
     public Scoreboard(ScoreboardModel scoreboard) {
         setLayout(new FlowLayout());
         currentScoreLabel = new JLabel("Current Score: 0");
@@ -38,11 +42,17 @@ public class Scoreboard extends JPanel implements GameObserver {
         remainingTilesLabel.setText("Remaining Tiles: " + tiles);
     }
 
+    /**
+     * observer calls boardChanged
+     */
     @Override
     public void boardChanged() {
         updateScorePanel();
     }
 
+    /**
+     * what is actually called when the publisher notifies the observer
+     */
     private void updateScorePanel() {
         setCurrentScoreLabel(scoreboard.getCurrentScore());
         setLastMoveScoreLabel(scoreboard.getLastMoveScore());

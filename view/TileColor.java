@@ -19,6 +19,10 @@ public enum TileColor {
         this.color = color;
     }
 
+    /**
+     * @param id the colorID
+     * @return the corresponding Color
+     */
     public static Color IDtoColor(int id) {
         for (TileColor t : values()) {
             if (t.id == id) return t.color;

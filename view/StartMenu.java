@@ -11,21 +11,24 @@ public class StartMenu extends JPanel {
     private String selectedLevel = "Easy";
     private JButton selectedButton = null;
 
-    // Färger för vald/ovald knapp
     private static final Color SELECTED_COLOR = new Color(70, 130, 180);
     private static final Color DEFAULT_COLOR   = UIManager.getColor("Button.background");
 
     HighScoreManager highScoreManager;
 
+    /**
+     * StartMenu constructor
+     * @param board main
+     * @param highScoreManager the highscoreManager keeping track of the highscores
+     */
     public StartMenu(Board board, HighScoreManager highScoreManager) {
         this.highScoreManager = highScoreManager;
 
-        setLayout(new GridBagLayout()); // Centrerar content-panelen
+        setLayout(new GridBagLayout());
 
         JPanel content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
-        // --- Titel ---
         JLabel title = new JLabel("Choose difficulty");
         title.setFont(new Font("SansSerif", Font.BOLD, 20));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -33,20 +36,18 @@ public class StartMenu extends JPanel {
         content.add(title);
         content.add(Box.createVerticalStrut(25));
 
-        // --- Knappar ---
         String[] levels = {"Easy", "Intermediate", "Hard", "Insane", "Nightmare"};
         for (String level : levels) {
             JButton btn = createButton(level);
             content.add(btn);
-            content.add(Box.createVerticalStrut(8)); // Fast mellanrum → ingen hoppning
+            content.add(Box.createVerticalStrut(8));
             if (level.equals("Easy")) {
-                markSelected(btn); // Markera Easy som vald från start
+                markSelected(btn); // mark easy as start
             }
         }
 
         content.add(Box.createVerticalStrut(20));
 
-        // --- Start-knapp ---
         JButton start = new JButton("Start Game");
         start.setAlignmentX(Component.CENTER_ALIGNMENT);
         start.setMaximumSize(new Dimension(200, 40));
@@ -75,9 +76,12 @@ public class StartMenu extends JPanel {
                 });
         content.add(controller, BorderLayout.WEST);
 
-        add(content); // GridBagLayout centrerar automatiskt
+        add(content); // gridBagLayout
     }
 
+    /**
+     * shows the highscore if there is any, as a JOptionPane
+     */
     private void showHighScores() {
         if (highScoreManager.getHighScores().isEmpty()) {
             JOptionPane.showMessageDialog(null, "No high scores yet!", "High Scores", JOptionPane.PLAIN_MESSAGE);
@@ -94,6 +98,11 @@ public class StartMenu extends JPanel {
         JOptionPane.showMessageDialog(null, sb.toString(), "High Scores", JOptionPane.PLAIN_MESSAGE);
     }
 
+    /**
+     * creates buttons for the level selection
+     * @param level the level of the button in creation
+     * @return the made button ready to add
+     */
     private JButton createButton(String level) {
         JButton button = new JButton(level);
 
@@ -114,7 +123,10 @@ public class StartMenu extends JPanel {
         return button;
     }
 
-    // Återställer föregående knapp och markerar ny
+    /**
+     * marks the button that is selected
+     * @param button the button clicked on
+     */
     private void markSelected(JButton button) {
         if (selectedButton != null) {
             selectedButton.setBackground(DEFAULT_COLOR);
