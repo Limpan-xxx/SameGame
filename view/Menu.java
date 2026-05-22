@@ -16,7 +16,7 @@ public class Menu extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
         JCheckBox DebugMode = new JCheckBox("Debug mode");
-        JCheckBox bestMoveMode = new JCheckBox("Show best move");
+        JCheckBox bestMoveMode = new JCheckBox("Best move");
         JButton undo = new JButton("Undo");
         JButton redo = new JButton("Redo");
         JButton reset = new JButton("Reset");
