@@ -21,9 +21,11 @@ public class BoardModel {
     /**
      * the constructor of the boardModel
      * initialized the game board
-     * @param gridRows the number of desired rows on the board
-     * @param gridColumns the number of desired columns on the board
-     * @param numberOfColors the number of desired columns on the board, for difficulty
+     * 
+     * @param gridRows       the number of desired rows on the board
+     * @param gridColumns    the number of desired columns on the board
+     * @param numberOfColors the number of desired columns on the board, for
+     *                       difficulty
      */
     public BoardModel(int gridRows, int gridColumns, int numberOfColors) {
         this.board = new Tile[gridRows][gridColumns];
@@ -59,6 +61,7 @@ public class BoardModel {
 
     /**
      * adds an observer to the list of observers
+     * 
      * @param debugObserver the debugObserver of the game, Tile[][] board
      */
     public void addDebugObserver(DebugObserver debugObserver) {
@@ -67,6 +70,7 @@ public class BoardModel {
 
     /**
      * removes an observer from the list of observers
+     * 
      * @param debugObserver the debugObserver of the game
      */
     public void removeDebugObserver(DebugObserver debugObserver) {
@@ -93,8 +97,9 @@ public class BoardModel {
 
     /**
      * notifies debugObservers which tiles has been removed
+     * 
      * @param neighbors the index to the tiles that has been removed
-     * @param board the gameModel board
+     * @param board     the gameModel board
      */
     public void notifyDebugRemovedTile(ArrayList<Point> neighbors, Tile[][] board) {
         for (DebugObserver observer : debugObservers) {
@@ -104,7 +109,9 @@ public class BoardModel {
 
     /**
      * notifies where the columns have moved to
-     * @param XmovedToY the list with a point where the point represents: x=startingColumn, y=endColumn
+     * 
+     * @param XmovedToY the list with a point where the point represents:
+     *                  x=startingColumn, y=endColumn
      */
     private void notifyDebugShiftedLeft(ArrayList<Point> XmovedToY) {
         for (DebugObserver observer : debugObservers) {
@@ -114,6 +121,7 @@ public class BoardModel {
 
     /**
      * notifies what column has fallen down
+     * 
      * @param fallenTilesInColumn list with indexes referring to the column
      */
     private void notifyDebugGravityApplied(ArrayList<Integer> fallenTilesInColumn) {
@@ -136,9 +144,11 @@ public class BoardModel {
 
     /**
      * recursive method that searches for neighbors to the current tile
+     * 
      * @param row                  index to tile
      * @param column               index to tile
-     * @param connectedCoordinates ArrayList filled with index to connected Tiles, recursive
+     * @param connectedCoordinates ArrayList filled with index to connected Tiles,
+     *                             recursive
      */
     private void searchConnected(int row, int column, ArrayList<Point> connectedCoordinates) {
         Point currentPoint = new Point(row, column);
@@ -171,6 +181,13 @@ public class BoardModel {
             searchConnected(row, column + 1, connectedCoordinates);
         }
     }
+
+    /**
+     * Finds the largest cluster of tile neighbours and return that cluster in a
+     * list
+     * 
+     * @return list with largest collection of neighbouring tiles
+     */
 
     public ArrayList<Point> getBestClusterToRemove() {
         ArrayList<Point> bestCluster = new ArrayList<>();
@@ -338,6 +355,7 @@ public class BoardModel {
 
     /**
      * clears the column
+     * 
      * @param column the one to be cleared
      */
     private void clearColumn(int column) {
