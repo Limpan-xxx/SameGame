@@ -56,6 +56,11 @@ public class ScoreboardModel {
         }
     }
 
+    /**
+     * calculates the score with a function based on the tiles removed in one move
+     * @param numberOfRemovedTiles the amount of tiles removed
+     * @return the score for that move
+     */
     public int calculateMoveScore(int numberOfRemovedTiles) {
         if (numberOfRemovedTiles < 2) {
             return 0;
@@ -63,6 +68,10 @@ public class ScoreboardModel {
         return (numberOfRemovedTiles - 2) * (numberOfRemovedTiles - 2);
     }
 
+    /**
+     * is called after each move, to calculate the score for the move, notifies the observers.
+     * @param numberOfRemovedTiles the number of tiles removed in one move
+     */
     public void updateAfterMove(int numberOfRemovedTiles) {
         lastMoveScore = calculateMoveScore(numberOfRemovedTiles);
 
@@ -78,6 +87,9 @@ public class ScoreboardModel {
         notifyObservers();
     }
 
+    /**
+     *
+     */
     public void saveState() {
         undoStackCurrentScore.push(currentScore);
         undoStackRemainingTiles.push(remainingTiles);
