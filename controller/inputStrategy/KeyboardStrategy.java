@@ -13,8 +13,9 @@ public class KeyboardStrategy implements InputStrategy {
 
     /**
      * the setup method for the KeyboardStrategy
+     * 
      * @param gameController references to the class GameController
-     * @param gamePanel references to the class GameController
+     * @param gamePanel      references to the class GameController
      */
     @Override
     public void setupInput(GameController gameController, GamePanel gamePanel) {
@@ -62,9 +63,15 @@ public class KeyboardStrategy implements InputStrategy {
         });
     }
 
+    /**
+     * Highlighting a tile when the keyboard-controlled cursor hovers over the
+     * currently selected button
+     * 
+     * @param buttons list of buttons in need of higlighting
+     */
+
     private void highlightButton(JButton[][] buttons) {
 
-        // Återställ alla borders
         for (JButton[] button : buttons) {
 
             for (JButton jButton : button) {
@@ -74,7 +81,6 @@ public class KeyboardStrategy implements InputStrategy {
             }
         }
 
-        // Markera vald knapp
         buttons[selectedRow][selectedColumn].setBorder(
                 BorderFactory.createLineBorder(
                         java.awt.Color.WHITE,
