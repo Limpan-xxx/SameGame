@@ -48,11 +48,11 @@ public class GamePanel extends JPanel implements GameObserver {
      * @param row    index of the JButton tile
      * @param column index of the JButton tile
      */
-    public void fillTileColor(JButton Tile, int row, int column) {
+    private void fillTileColor(JButton Tile, int row, int column) {
         Tile.setBackground(TileColor.IDtoColor(boardModel.getBoard()[row][column].getColorID()));
     }
 
-    public void clearHighlights() {
+    private void clearHighlights() {
         int rows = boardModel.getGridRows();
         int columns = boardModel.getGridColumns();
 
@@ -63,7 +63,7 @@ public class GamePanel extends JPanel implements GameObserver {
         }
     }
 
-    public void highlightTiles(ArrayList<Point> tiles) {
+    private void highlightTiles(ArrayList<Point> tiles) {
         clearHighlights();
 
         for (Point p : tiles) {
@@ -87,7 +87,7 @@ public class GamePanel extends JPanel implements GameObserver {
     /**
      * updates the panel based on if Tile[][] board has changed
      */
-    public void updatePanel() {
+    private void updatePanel() {
         int rows = boardModel.getGridRows();
         int columns = boardModel.getGridColumns();
 

@@ -50,13 +50,6 @@ public class Scoreboard extends JPanel implements GameObserver {
      */
     @Override
     public void boardChanged() {
-        updateScorePanel();
-    }
-
-    /**
-     * what is actually called when the publisher notifies the observer
-     */
-    private void updateScorePanel() {
         setCurrentScoreLabel(scoreboard.getCurrentScore());
         setLastMoveScoreLabel(scoreboard.getLastMoveScore());
         setRemainingTilesLabel(scoreboard.getRemainingTiles());
