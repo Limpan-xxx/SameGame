@@ -58,7 +58,7 @@ public class GamePanel extends JPanel implements GameObserver {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                buttons[i][j].setBorder(null);
+                buttons[i][j].setBorder(BorderFactory.createEmptyBorder(4,4,4,4));
             }
         }
     }
