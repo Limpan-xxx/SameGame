@@ -53,10 +53,11 @@ public class Board {
         BoardModel boardModel = new BoardModel(BOARD_ROWS, BOARD_COLUMNS, numberOfColors);
         ScoreboardModel scoreboardModel = new ScoreboardModel(BOARD_ROWS * BOARD_COLUMNS);
         SoundManager soundManager = new SoundManager();
-        GameController gameController = new GameController(boardModel, this, scoreboardModel, soundManager, highScoreManager);
+        GameController gameController = new GameController(boardModel, this, scoreboardModel, soundManager,
+                highScoreManager);
         Scoreboard scoreboard = new Scoreboard(scoreboardModel);
         JPanel gamePanelWrapper = new JPanel(new GridBagLayout());
-        gamePanelWrapper.setPreferredSize(new Dimension(BOARD_COLUMNS* 40, BOARD_ROWS*40));
+        gamePanelWrapper.setPreferredSize(new Dimension(BOARD_COLUMNS * 40, BOARD_ROWS * 40));
         GamePanel gamepanel = new GamePanel(boardModel);
         Menu menu = new Menu(gameController, boardModel, scoreboardModel, gamepanel);
         gamePanelWrapper.add(gamepanel);
@@ -69,7 +70,6 @@ public class Board {
         frame.add(gamePanelWrapper, BorderLayout.CENTER);
         frame.add(scoreboard, BorderLayout.SOUTH);
 
-        // init settings for controller
         InputStrategy inputStrategy;
         if (controllerModeOn) {
             inputStrategy = new KeyboardStrategy();
@@ -86,7 +86,7 @@ public class Board {
 
     public void returnToStartMenu() {
         frame.getContentPane().removeAll();
-        StartMenu startMenu = new StartMenu(this,highScoreManager);
+        StartMenu startMenu = new StartMenu(this, highScoreManager);
         frame.add(startMenu);
         frame.revalidate();
         frame.repaint();
