@@ -21,7 +21,7 @@ public class Board {
 
     public Board() {
         frame = new JFrame("SameGame");
-        frame.setSize(800, 600);
+        frame.setSize(900, 700);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         this.highScoreManager = new HighScoreManager();
@@ -56,6 +56,7 @@ public class Board {
         GameController gameController = new GameController(boardModel, this, scoreboardModel, soundManager, highScoreManager);
         Scoreboard scoreboard = new Scoreboard(scoreboardModel);
         JPanel gamePanelWrapper = new JPanel(new GridBagLayout());
+        gamePanelWrapper.setPreferredSize(new Dimension(BOARD_COLUMNS* 40, BOARD_ROWS*40));
         GamePanel gamepanel = new GamePanel(boardModel);
         Menu menu = new Menu(gameController, boardModel, scoreboardModel, gamepanel);
         gamePanelWrapper.add(gamepanel);
