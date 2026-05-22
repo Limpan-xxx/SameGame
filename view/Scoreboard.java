@@ -14,8 +14,11 @@ public class Scoreboard extends JPanel implements GameObserver {
     private ScoreboardModel scoreboard;
 
     /**
-     * constructor for the scoreboard UI
-     * @param scoreboard the scoreboardModel
+     * Constructs a Scoreboard panel that observes the provided ScoreboardModel.
+     * Initializes the labels for current score, last move score, and remaining
+     * tiles.
+     *
+     * @param scoreboard the model to observe
      */
     public Scoreboard(ScoreboardModel scoreboard) {
         setLayout(new FlowLayout());
