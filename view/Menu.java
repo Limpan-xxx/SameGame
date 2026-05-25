@@ -11,6 +11,9 @@ public class Menu extends JPanel {
 
     private boolean debugState = false;
 
+    /**
+     * constructor for the sidemenu
+     */
     public Menu(GameController gameController, BoardModel boardModel, ScoreboardModel scoreboardModel,
             GamePanel gamePanel) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

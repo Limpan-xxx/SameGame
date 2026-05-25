@@ -29,6 +29,10 @@ public class DebugView implements DebugObserver {
         System.out.println();
     }
 
+    /**
+     * prints the current gameboard
+     * @param board the gameboard
+     */
     @Override
     public void currentBoard(Tile[][] board) {
         printSectionStart("GAMEBOARD");
@@ -41,6 +45,12 @@ public class DebugView implements DebugObserver {
         printSectionEnd("GAMEBOARD");
     }
 
+    /**
+     * prints the index of the tile that was clicked
+     * @param row the row of the clicked tile
+     * @param column the column of the clicked tile
+     * @param colorID the color id of the tile
+     */
     @Override
     public void tileClicked(int row, int column, int colorID) {
         printSectionStart("DEBUG START");
@@ -52,6 +62,11 @@ public class DebugView implements DebugObserver {
         printSectionEnd("CLICK EVENT");
     }
 
+    /**
+     * prints the index of the removed tiles
+     * @param neighbors the array filled with index of the different neighbors
+     * @param board for usage of getColorID()
+     */
     @Override
     public void tilesRemoved(ArrayList<Point> neighbors, Tile[][] board) {
         printSectionStart("REMOVED TILES");
@@ -62,6 +77,10 @@ public class DebugView implements DebugObserver {
         printSectionEnd("REMOVED TILES");
     }
 
+    /**
+     * tellse which columns that have fallen down
+     * @param fallenTilesInColumn the list of collapsed columns
+     */
     @Override
     public void gravityApplied(ArrayList<Integer> fallenTilesInColumn) {
         printSectionStart("GRAVITY FALLS");
@@ -71,6 +90,10 @@ public class DebugView implements DebugObserver {
         printSectionEnd("GRAVITY FALLS");
     }
 
+    /**
+     * prints the columns that has moved
+     * @param XmovedToY the list with a point where the point represents: x=startingColumn, y=endColumn
+     */
     @Override
     public void Shiftedleft(ArrayList<Point> XmovedToY) {
         printSectionStart("SHIFT LEFT");
@@ -80,6 +103,11 @@ public class DebugView implements DebugObserver {
         printSectionEnd("SHIFT LEFT");
     }
 
+    /**
+     * prints the score that has updated
+     * @param lastMoveScore the score from the last move
+     * @param currentScore the score right now
+     */
     @Override
     public void scoreUpdated(int lastMoveScore, int currentScore) {
         printSectionStart("SCORE UPDATES");

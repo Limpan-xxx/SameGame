@@ -13,6 +13,10 @@ public class GamePanel extends JPanel implements GameObserver {
     private BoardModel boardModel;
     private boolean highlightBestMove = false;
 
+    /**
+     * the constructor for the gamepanel
+     * @param boardModel the boardmodel with the gamelogic
+     */
     public GamePanel(BoardModel boardModel) {
         this.boardModel = boardModel;
         int rows = boardModel.getGridRows();
@@ -52,6 +56,9 @@ public class GamePanel extends JPanel implements GameObserver {
         Tile.setBackground(TileColor.IDtoColor(boardModel.getBoard()[row][column].getColorID()));
     }
 
+    /**
+     * clears the highlighted tiles, from bestMove
+     */
     private void clearHighlights() {
         int rows = boardModel.getGridRows();
         int columns = boardModel.getGridColumns();
@@ -63,6 +70,10 @@ public class GamePanel extends JPanel implements GameObserver {
         }
     }
 
+    /**
+     * highlights the tiles
+     * @param tiles the tiles that should be highlighted
+     */
     private void highlightTiles(ArrayList<Point> tiles) {
         clearHighlights();
 
@@ -74,6 +85,10 @@ public class GamePanel extends JPanel implements GameObserver {
         }
     }
 
+    /**
+     * button is pressed to highlight the best move, then this is called
+     * @param highlightBestMove boolean operator
+     */
     public void setHighlightBestMove(boolean highlightBestMove) {
         this.highlightBestMove = highlightBestMove;
 

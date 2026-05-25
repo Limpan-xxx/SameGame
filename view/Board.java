@@ -35,6 +35,10 @@ public class Board {
         new Board();
     }
 
+    /**
+     * method for starting the game in the difficulty of choice
+     * @param level the difficulty level
+     */
     public void startGame(String level) {
         int numberOfColors = switch (level) {
             case "Easy" -> 2;
@@ -84,6 +88,9 @@ public class Board {
         gamepanel.requestFocusInWindow();
     }
 
+    /**
+     * returns to the start menu
+     */
     public void returnToStartMenu() {
         frame.getContentPane().removeAll();
         StartMenu startMenu = new StartMenu(this, highScoreManager);
